@@ -1,4 +1,6 @@
 package com.codecool.logmyphones.modell;
 
-public record Call() {
+import java.time.LocalDateTime;
+
+public record Call(int callId, String callingNumber, String calledNumber, LocalDateTime dateTime,CallStatus callStatus, int duration) {
 }

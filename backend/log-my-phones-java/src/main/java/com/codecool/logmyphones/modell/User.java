@@ -1,4 +1,5 @@
 package com.codecool.logmyphones.modell;
 
-public record User() {
+//TODO
+public record User(int userId, String name, String email) {
 }
