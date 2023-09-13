@@ -8,6 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("contacts")
 public class ContactController {
+    /*private final List<Contact> contacts = List.of();*/
     private final List<String> contacts = new ArrayList<>();
 
     @GetMapping("/")

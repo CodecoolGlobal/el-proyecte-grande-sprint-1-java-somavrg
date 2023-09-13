@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("calls")
 public class CallController {
+    /*private final List<Call> calls = List.of();*/
     private final List<String> calls = new ArrayList<>();
     @GetMapping("/")
     public List<String> getAllCalls() {
