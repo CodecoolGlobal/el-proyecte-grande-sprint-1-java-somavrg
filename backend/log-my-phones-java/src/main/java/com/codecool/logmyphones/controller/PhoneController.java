@@ -1,4 +1,4 @@
 package com.codecool.logmyphones.controller;
 
-public class DispatcherController {
+public class PhoneController {
 }
