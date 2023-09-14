@@ -1,5 +1,6 @@
 package com.codecool.logmyphones.controller;
 
+import com.codecool.logmyphones.modell.Contact;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -8,19 +9,21 @@ import java.util.List;
 @RestController
 @RequestMapping("contacts")
 public class ContactController {
-    /*private final List<Contact> contacts = List.of();*/
-    private final List<String> contacts = new ArrayList<>();
+
+    // new arraylist maybe?
+    private final List<Contact> contacts = List.of(new Contact(1, "James", "+36202567383"));
+
 
     @GetMapping("/")
-    public List<String> getAllContacts() {
+    public List<Contact> getAllContacts() {
 
         //TODO: contactService.getContacts()
 
-        return new ArrayList<>(contacts);
+        return List.copyOf(contacts);
     }
 
     @GetMapping("/{id}")
-    public String getContactById(@PathVariable int id) {
+    public Contact getContactById(@PathVariable int id) {
 
         //TODO: contactService.getContactById(id)
 
@@ -29,7 +32,7 @@ public class ContactController {
     }
 
     @PostMapping("/")
-    public boolean addNewContact(@RequestBody /*Contact contact*/ String contact) {
+    public boolean addNewContact(@RequestBody Contact contact) {
 
         //TODO: contactService.addNewContact(contact)
 
