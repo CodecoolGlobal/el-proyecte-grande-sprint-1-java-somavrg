@@ -11,7 +11,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>(List.of(
+            new User(1, "Jamie", "jamie@email.com"),
+            new User(2, "Johnathan", "johnathan@email.com"),
+            new User(3, "Marie", "marie@email.com"),
+            new User(4, "Daniel", "daniel@email.com"),
+            new User(5, "Samantha", "samantha@email.com"),
+            new User(6, "Michaela", "michaela@email.com"),
+            new User(7, "Emilia", "emilia@email.com"),
+            new User(8, "William", "william@email.com"),
+            new User(9, "Oliver", "oliver@email.com"),
+            new User(10, "Danielle", "danielle@email.com"),
+            new User(11, "Sophie", "sophie@email.com"),
+            new User(12, "Matthew", "matthew@email.com"),
+            new User(13, "Ava", "ava@email.com"),
+            new User(14, "Chris", "chris@email.com"),
+            new User(15, "Emma", "emma@email.com"),
+            new User(16, "Josephine", "josephine@email.com"),
+            new User(17, "Charlie", "charlie@email.com"),
+            new User(18, "Benjamin", "benjamin@email.com"),
+            new User(19, "Mia", "mia@email.com"),
+            new User(20, "Alex", "alex@email.com"),
+            new User(21, "Grace", "grace@email.com")
+    ));
+
 
     @GetMapping("")
     public List<User> getUsers() {
