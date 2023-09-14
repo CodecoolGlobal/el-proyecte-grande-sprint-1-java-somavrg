@@ -10,8 +10,29 @@ import java.util.List;
 @RequestMapping("contacts")
 public class ContactController {
 
-    // new arraylist maybe?
-    private final List<Contact> contacts = List.of(new Contact(1, "James", "+36202567383"));
+    private final List<Contact> contacts = new ArrayList<>(List.of(
+            new Contact(1, "James", "+36202567383"),
+            new Contact(2, "John", "+36204567890"),
+            new Contact(3, "Mary", "+36201234567"),
+            new Contact(4, "David", "+36203456789"),
+            new Contact(5, "Sarah", "+36207654321"),
+            new Contact(6, "Michael", "+36201122334"),
+            new Contact(7, "Emily", "+36209876543"),
+            new Contact(8, "William", "+36205678901"),
+            new Contact(9, "Olivia", "+36204567890"),
+            new Contact(10, "Daniel", "+36201234567"),
+            new Contact(11, "Sophia", "+36203456789"),
+            new Contact(12, "Matthew", "+36207654321"),
+            new Contact(13, "Ava", "+36201122334"),
+            new Contact(14, "Christopher", "+36209876543"),
+            new Contact(15, "Emma", "+36205678901"),
+            new Contact(16, "Joseph", "+36204567890"),
+            new Contact(17, "Chloe", "+36201234567"),
+            new Contact(18, "Benjamin", "+36203456789"),
+            new Contact(19, "Mia", "+36207654321"),
+            new Contact(20, "Alexander", "+36201122334"),
+            new Contact(21, "Grace", "+36209876543")
+    ));
 
 
     @GetMapping("/")
@@ -19,7 +40,7 @@ public class ContactController {
 
         //TODO: contactService.getContacts()
 
-        return List.copyOf(contacts);
+        return new ArrayList<>(contacts);
     }
 
     @GetMapping("/{id}")
