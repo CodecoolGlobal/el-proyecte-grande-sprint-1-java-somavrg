@@ -35,7 +35,7 @@ public class ContactController {
     ));
 
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Contact> getAllContacts() {
 
         //TODO: contactService.getContacts()
