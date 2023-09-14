@@ -29,7 +29,7 @@ public class PhoneController {
     @PostMapping("")
     public boolean addNewPhone(@RequestBody Phone phone) {
         // TODO: phoneService.addNewPhone(phone)
-        return false;
+        return phones.add(phone);
     }
 
     @PatchMapping("/{id}")
@@ -41,7 +41,7 @@ public class PhoneController {
     @DeleteMapping("/{id}")
     public boolean deletePhone(@PathVariable int id) {
         // TODO: phoneService.deletePhoneById(id)
-        return false;
+        return phones.remove(phones.get(id));
     }
 }
 
