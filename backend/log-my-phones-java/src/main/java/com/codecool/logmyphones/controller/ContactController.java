@@ -4,13 +4,14 @@ import com.codecool.logmyphones.modell.Contact;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/contacts")
 public class ContactController {
 
-    private final List<Contact> contacts = new ArrayList<>(List.of(
+    private final List<Contact> contacts = new ArrayList<>(Arrays.asList(
             new Contact(1, "James", "+36202567383"),
             new Contact(2, "John", "+36204567890"),
             new Contact(3, "Mary", "+36201234567"),
@@ -52,12 +53,12 @@ public class ContactController {
         return contacts.get(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public boolean addNewContact(@RequestBody Contact contact) {
 
         //TODO: contactService.addNewContact(contact)
-
-        return contacts.add(contact);
+        Contact newContact = new Contact(contacts.size() + 1, contact.name(), contact.phoneNumber());
+        return contacts.add(newContact);
     }
 
 
