@@ -5,22 +5,16 @@ return (
 <table>
     <thead>
         <tr>
-            <th>Calling number</th>
-            <th>Called number</th>
-            <th>Status</th>
-            <th>Duration</th>
-            <th>Date</th>
-        </tr>
+            <th>Name</th>
+            <th>Phone number</th>
+         </tr>
     </thead>
     <tbody>
         {contacts.map((contact) => (
-            <tr key={contact.callId}>
-                <td>{contact.callingNumber}</td>
-                <td>{contact.calledNumber}</td>
-                <td>{contact.callStatus}</td>
-                <td>{contact.duration}</td>
-                <td>{contact.dateTime}</td>
-            </tr>
+            <tr key={contact.contactId}>
+                <td>{contact.name}</td>
+                <td>{contact.phoneNumber}</td>
+             </tr>
         ))}
     </tbody>
 </table>

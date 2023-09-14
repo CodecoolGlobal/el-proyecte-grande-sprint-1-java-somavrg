@@ -9,7 +9,7 @@ const Contacts = ()=>{
     const [contacts, setContacts] = useState([]);
 
     useEffect(()=> {
-        fetchContacts.then((contacts)=> {
+        fetchContacts().then((contacts)=> {
             setContacts(contacts)
         })
     },[]);
