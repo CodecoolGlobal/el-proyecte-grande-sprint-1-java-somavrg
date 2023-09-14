@@ -53,12 +53,12 @@ public class ContactController {
         return contacts.get(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public boolean addNewContact(@RequestBody Contact contact) {
 
         //TODO: contactService.addNewContact(contact)
-
-        return contacts.add(contact);
+        Contact newContact = new Contact(contacts.size() + 1, contact.name(), contact.phoneNumber());
+        return contacts.add(newContact);
     }
 
 
