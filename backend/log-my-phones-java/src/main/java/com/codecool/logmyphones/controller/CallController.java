@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("calls")
+@RequestMapping("/calls")
 public class CallController {
 
     private final List<Call> calls = new ArrayList<>(List.of(

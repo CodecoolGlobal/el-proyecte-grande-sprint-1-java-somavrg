@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("contacts")
+@RequestMapping("/contacts")
 public class ContactController {
 
     private final List<Contact> contacts = new ArrayList<>(List.of(
