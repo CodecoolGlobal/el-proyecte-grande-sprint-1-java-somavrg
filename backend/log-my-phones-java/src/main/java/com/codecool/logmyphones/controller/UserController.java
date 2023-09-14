@@ -27,7 +27,7 @@ public class UserController {
     @PostMapping("")
     public boolean addNewUser(@RequestBody User user) {
         //TODO: userService.addNewUser(user)
-        return false;
+        return users.add(user);
     }
 
     @PatchMapping("/{id}")
@@ -39,6 +39,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public boolean deleteUser(@PathVariable int id) {
         //TODO: userService.deleteUserById(id)
-        return false;
+        return users.remove(users.get(id));
     }
 }
