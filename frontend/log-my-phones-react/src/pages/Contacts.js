@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import ContactTable from "../components/ContactTable";
 
 const fetchContacts = () => {
-    return fetch("/api/contacts").then((res) => res.json());
+    return fetch("contacts").then((res) => res.json());
   };
 
 const Contacts = ()=>{
@@ -11,11 +12,13 @@ const Contacts = ()=>{
         fetchContacts.then((contacts)=> {
             setContacts(contacts)
         })
-    },[])
+    },[]);
 
-return null;
+return(
+    <ContactTable contacts={contacts}/>
+);
     
 
-}
+};
 
 export default Contacts;
