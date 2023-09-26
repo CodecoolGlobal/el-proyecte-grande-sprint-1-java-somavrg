@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/phones")
+@RequestMapping("/dispatchers")
 public class DispatcherController {
 
     //TODO service
