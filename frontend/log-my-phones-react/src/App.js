@@ -3,12 +3,14 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Contacts from './pages/Contacts';
 import RootLayout from './layouts/RootLayout';
 import Dashboard from './pages/Dashboard';
+import Statics from './pages/Statics';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="dashboard" element={<Dashboard/>}></Route>
       <Route path="contacts" element={<Contacts />}></Route>
+      <Route path="statics" element={<Statics/>}></Route>
     </Route>
 
   )
