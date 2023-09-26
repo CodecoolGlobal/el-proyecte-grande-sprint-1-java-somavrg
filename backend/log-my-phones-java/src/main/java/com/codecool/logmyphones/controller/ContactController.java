@@ -21,32 +21,32 @@ public class ContactController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Contact> getAllContactsByCompany(@PathVariable("companyId") int companyId) {
+    public Set<Contact> getAllContactsByCompany(@PathVariable int companyId) {
         //TODO: contactService.getContacts()
         return null;
     }
 
     @GetMapping("/{companyId}/{id}")
-    public Contact getContactById(@PathVariable("companyId") int companyId, @PathVariable("id") int id) {
+    public Contact getContactById(@PathVariable int companyId, @PathVariable int id) {
         //TODO: contactService.getContactById(id)
         return null;
     }
 
     @PostMapping("/{companyId}")
-    public boolean addNewContact(@PathVariable("companyId") int companyId, @RequestBody Contact contact) {
+    public boolean addNewContact(@PathVariable int companyId, @RequestBody Contact contact) {
         //TODO: contactService.addNewContact(contact)
         return false;
     }
 
     @PatchMapping("/{companyId}/{id}")
-    public void updateContactById(@PathVariable("companyId") int companyId,
-                                  @PathVariable("id") int id,
+    public void updateContactById(@PathVariable int companyId,
+                                  @PathVariable int id,
                                   @RequestBody Contact contactUpdate) {
         //TODO: contactService.updateRoomById(id, contactUpdate);
     }
 
     @DeleteMapping("/{companyId}/{id}/delete")
-    public boolean deleteContactById(@PathVariable("companyId") int companyId, @PathVariable int id) {
+    public boolean deleteContactById(@PathVariable int companyId, @PathVariable int id) {
         //TODO: contactService.deleteContactById(id)
         return false;
     }

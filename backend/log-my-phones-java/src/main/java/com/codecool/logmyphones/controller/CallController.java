@@ -22,19 +22,19 @@ public class CallController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Call> getAllCallsByCompany(@PathVariable("companyId") int companyId) {
+    public Set<Call> getAllCallsByCompany(@PathVariable int companyId) {
         //TODO: callService.getCalls()
         return null;
     }
 
     @GetMapping("/{companyId}/byDispatchers")
-    public Set<Call> getAllCallsByDispatchers(@PathVariable("companyId") int companyId, @RequestBody Set<Integer> dispatcherIds) {
+    public Set<Call> getAllCallsByDispatchers(@PathVariable int companyId, @RequestBody Set<Integer> dispatcherIds) {
         //TODO: callService.getCallsByDispatchers()
         return null;
     }
 
     @GetMapping("/{companyId}/byStatus")
-    public Set<Call> getAllCallsByStatus(@PathVariable("companyId") int companyId, @RequestBody CallStatus callStatus) {
+    public Set<Call> getAllCallsByStatus(@PathVariable int companyId, @RequestBody CallStatus callStatus) {
         //TODO: callService.getCallsByStatus(callStatus)
         return null;
     }
