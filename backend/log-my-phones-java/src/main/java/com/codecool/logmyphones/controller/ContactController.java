@@ -20,13 +20,13 @@ public class ContactController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Contact> getAllContactsByCompany(@PathVariable int companyId) {
+    public Set<Contact> getAllContactsByCompany(@PathVariable("companyId") int companyId) {
         //TODO: contactService.getContacts()
         return null;
     }
 
     @GetMapping("/{companyId}/{id}")
-    public Contact getContactById(@PathVariable int companyId, int id) {
+    public Contact getContactById(@PathVariable("companyId") int companyId, @PathVariable("id") int id) {
         //TODO: contactService.getContactById(id)
         return null;
     }
