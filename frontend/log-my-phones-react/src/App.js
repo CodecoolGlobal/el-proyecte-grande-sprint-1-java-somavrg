@@ -4,6 +4,7 @@ import Contacts from './pages/Contacts';
 import RootLayout from './layouts/RootLayout';
 import Dashboard from './pages/Dashboard';
 import Statics from './pages/Statics';
+import AddPhone from './pages/AddPhone';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -11,8 +12,8 @@ const router = createBrowserRouter(
       <Route path="dashboard" element={<Dashboard/>}></Route>
       <Route path="contacts" element={<Contacts />}></Route>
       <Route path="statics" element={<Statics/>}></Route>
+      <Route path="addphone" element={<AddPhone/>}></Route>
     </Route>
-
   )
 )
 
