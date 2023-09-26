@@ -38,7 +38,7 @@ public class ContactController {
         return false;
     }
 
-    @PutMapping("/{companyId}/{id}")
+    @PatchMapping("/{companyId}/{id}")
     public void updateContactById(@PathVariable("companyId") int companyId,
                                   @PathVariable("id") int id,
                                   @RequestBody Contact contactUpdate) {
