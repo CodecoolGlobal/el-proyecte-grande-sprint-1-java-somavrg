@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class Phone {
     private int phoneNumber;
     @Transient
     @OneToMany(mappedBy = "phone", cascade = CascadeType.ALL)
-    private Call call;
+    private Set<Call> call;
     @Transient
     @OneToOne(mappedBy = "phone", cascade = CascadeType.ALL)
     private Contact contact;

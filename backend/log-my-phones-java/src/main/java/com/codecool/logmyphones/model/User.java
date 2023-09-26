@@ -19,6 +19,6 @@ public class User {
    private String email;
    @OneToMany(mappedBy ="user" ,cascade = CascadeType.ALL)
    private Set<Contact> contacts;
-   @ManyToOne(cascade = CascadeType.ALL)
+   @OneToMany(cascade = CascadeType.ALL)
    private Set<Dispatcher> dispatchers;
 }
