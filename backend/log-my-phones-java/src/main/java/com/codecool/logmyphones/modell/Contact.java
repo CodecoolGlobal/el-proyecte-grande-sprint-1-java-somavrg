@@ -16,7 +16,7 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactId;
     private String name;
-    @OneToOne(mappedBy = "phone")
+    @OneToOne
     private Phone phone;
     private String info;
     @Transient
