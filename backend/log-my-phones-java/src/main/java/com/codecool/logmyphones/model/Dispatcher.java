@@ -1,4 +1,4 @@
-package com.codecool.logmyphones.modell;
+package com.codecool.logmyphones.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Contact {
+public class Dispatcher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int contactId;
+    private int dispatcherId;
     private String name;
     @OneToOne
     private Phone phone;
-    private String info;
+    @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL)
+    private Set<Call> calls;
     @Transient
     @ManyToOne
     private User user;

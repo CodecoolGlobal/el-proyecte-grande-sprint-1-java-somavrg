@@ -1,4 +1,4 @@
-package com.codecool.logmyphones.modell;
+package com.codecool.logmyphones.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

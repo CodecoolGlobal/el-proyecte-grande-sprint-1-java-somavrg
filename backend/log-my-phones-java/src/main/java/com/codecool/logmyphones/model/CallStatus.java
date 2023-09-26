@@ -1,4 +1,4 @@
-package com.codecool.logmyphones.modell;
+package com.codecool.logmyphones.model;
 
 public enum CallStatus {
     ONGOING,
