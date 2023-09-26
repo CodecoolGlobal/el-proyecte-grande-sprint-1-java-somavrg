@@ -1,11 +1,9 @@
 package com.codecool.logmyphones.controller;
 
 import com.codecool.logmyphones.model.User;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

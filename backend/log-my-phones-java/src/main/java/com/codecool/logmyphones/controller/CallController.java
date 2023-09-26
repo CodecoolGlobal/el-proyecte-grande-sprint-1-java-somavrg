@@ -1,12 +1,9 @@
 package com.codecool.logmyphones.controller;
 
 import com.codecool.logmyphones.model.Call;
-import com.codecool.logmyphones.model.CallStatus;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @RestController
