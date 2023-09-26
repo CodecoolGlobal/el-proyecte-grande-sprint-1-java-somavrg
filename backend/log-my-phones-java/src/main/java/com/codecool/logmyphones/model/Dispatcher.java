@@ -16,7 +16,7 @@ import java.util.Set;
 public class Dispatcher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int dispatcherId;
+    private Long dispatcherId;
     private String name;
     @OneToOne
     private Phone phone;
