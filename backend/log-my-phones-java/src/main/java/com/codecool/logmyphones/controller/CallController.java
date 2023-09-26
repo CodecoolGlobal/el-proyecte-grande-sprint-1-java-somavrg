@@ -2,6 +2,7 @@ package com.codecool.logmyphones.controller;
 
 import com.codecool.logmyphones.model.Call;
 
+import com.codecool.logmyphones.model.CallStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -29,6 +30,12 @@ public class CallController {
     @GetMapping("/{companyId}/byDispatchers")
     public Set<Call> getAllCallsByDispatchers(@PathVariable("companyId") int companyId, @RequestBody Set<Integer> dispatcherIds) {
         //TODO: callService.getCallsByDispatchers()
+        return null;
+    }
+
+    @GetMapping("/{companyId}/byStatus")
+    public Set<Call> getAllCallsByStatus(@PathVariable("companyId") int companyId, @RequestBody CallStatus callStatus) {
+        //TODO: callService.getCallsByStatus(callStatus)
         return null;
     }
 }
