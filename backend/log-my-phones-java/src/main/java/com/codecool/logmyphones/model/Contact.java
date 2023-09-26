@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int contactId;
+    private Long contactId;
     private String name;
     @OneToOne
     private Phone phone;

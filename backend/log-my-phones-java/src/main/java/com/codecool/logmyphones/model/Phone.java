@@ -15,7 +15,7 @@ import java.util.Set;
 @Builder
 public class Phone {
     @Id
-    private int phoneNumber;
+    private String phoneNumber;
     @Transient
     @OneToMany(mappedBy = "phone", cascade = CascadeType.ALL)
     private Set<Call> call;

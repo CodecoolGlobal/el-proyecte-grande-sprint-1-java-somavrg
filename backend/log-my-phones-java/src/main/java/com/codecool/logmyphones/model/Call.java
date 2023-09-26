@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Call {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int callId;
+    private Long callId;
     @ManyToOne(cascade = CascadeType.ALL)
     private Phone caller;
     @ManyToOne(cascade = CascadeType.ALL)
