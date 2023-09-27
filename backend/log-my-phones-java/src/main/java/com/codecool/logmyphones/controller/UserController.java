@@ -1,7 +1,5 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.CompanyUser;
-
 import com.codecool.logmyphones.model.DTO.UserDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +32,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public boolean addNewUser(@RequestBody UserDTO user) {
+    public void addNewUser(@RequestBody UserDTO user) {
         //TODO: userService.addNewUser(user)
-        return false;
     }
 
     @PatchMapping("/{id}")
@@ -45,8 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteUser(@PathVariable Long id) {
+    public void deleteUser(@PathVariable Long id) {
         //TODO: userService.deleteUserById(id)
-        return false;
     }
 }

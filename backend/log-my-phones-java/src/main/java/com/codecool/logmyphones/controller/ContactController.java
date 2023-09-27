@@ -1,7 +1,6 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Contact;
-
+import com.codecool.logmyphones.model.DTO.ContactDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -21,33 +20,31 @@ public class ContactController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Contact> getAllContactsByCompany(@PathVariable int companyId) {
+    public Set<ContactDTO> getAllContactsByCompany(@PathVariable Long companyId) {
         //TODO: contactService.getContacts()
         return null;
     }
 
     @GetMapping("/{companyId}/{id}")
-    public Contact getContactById(@PathVariable int companyId, @PathVariable int id) {
+    public ContactDTO getContactById(@PathVariable Long companyId, @PathVariable Long id) {
         //TODO: contactService.getContactById(id)
         return null;
     }
 
     @PostMapping("/{companyId}")
-    public boolean addNewContact(@PathVariable int companyId, @RequestBody Contact contact) {
+    public void addNewContact(@PathVariable Long companyId, @RequestBody ContactDTO contact) {
         //TODO: contactService.addNewContact(contact)
-        return false;
     }
 
     @PatchMapping("/{companyId}/{id}")
-    public void updateContactById(@PathVariable int companyId,
-                                  @PathVariable int id,
-                                  @RequestBody Contact contactUpdate) {
+    public void updateContactById(@PathVariable Long companyId,
+                                  @PathVariable Long id,
+                                  @RequestBody ContactDTO contactUpdate) {
         //TODO: contactService.updateRoomById(id, contactUpdate);
     }
 
     @DeleteMapping("/{companyId}/{id}/delete")
-    public boolean deleteContactById(@PathVariable int companyId, @PathVariable int id) {
+    public void deleteContactById(@PathVariable Long companyId, @PathVariable Long id) {
         //TODO: contactService.deleteContactById(id)
-        return false;
     }
 }
