@@ -81,10 +81,14 @@ const RootLayout = () => {
                 variant="permanent"
                 anchor="left"
             >
-                <Toolbar sx={{m: 3}}>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    m: 3
+                    }}>
                     <Avatar sx={{mx: 3}}/>
-                    <Typography>Example Ltd.</Typography>
-                </Toolbar>
+                    <Typography sx={{lineHeight: 'normal'}}>Example Ltd.</Typography>
+                </Box>
                 <Divider />
                 <List sx={{
                     mx: 1.5
