@@ -22,7 +22,6 @@ public class Dispatcher {
     private Phone phone;
     @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL)
     private Set<Call> calls;
-    @Transient
     @ManyToOne
-    private User user;
+    private CompanyUser user;
 }
