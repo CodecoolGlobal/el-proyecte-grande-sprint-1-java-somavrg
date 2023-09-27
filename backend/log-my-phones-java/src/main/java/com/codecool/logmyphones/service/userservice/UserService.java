@@ -7,7 +7,7 @@ import java.util.Set;
 public interface UserService {
     Set<UserDTO> getAllUsers();
     UserDTO getUserById(Long id);
-    boolean addNewUser(UserDTO userDTO);
+    void addNewUser(UserDTO userDTO);
     void updateUser(Long id, UserDTO userDTO);
-    boolean deleteUser(Long id);
+    void deleteUser(Long id);
 }
