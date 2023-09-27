@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import ListSubheader from '@mui/material/ListSubheader';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -14,14 +15,19 @@ import SpaceDashboardRoundedIcon from '@mui/icons-material/SpaceDashboardRounded
 import AddIcCallRoundedIcon from '@mui/icons-material/AddIcCallRounded';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
+import { Typography } from '@mui/material';
 
 
-const drawerWidth = 350;
+
+
+
+const drawerWidth = 340;
+
 
 
 const RootLayout = () => {
 
-   
+
     const navigate = useNavigate();
 
     const menuItems = [
@@ -47,12 +53,13 @@ const RootLayout = () => {
         }
     ]
 
- 
+
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex'
+         }}>
             <CssBaseline />
-         
+
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -65,22 +72,23 @@ const RootLayout = () => {
                 variant="permanent"
                 anchor="left"
             >
-                <Toolbar />
+                <ListSubheader component="div" id="nested-list-subheader">
+                    Example Ltd.
+                </ListSubheader>
                 <Divider />
                 <List>
-
-                    <List>
-                        {menuItems.map(item => (
-                            <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
+                        <List >
+                            {menuItems.map(item => (
+                                <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.text} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
                 </List>
                 <Divider />
 
@@ -95,7 +103,7 @@ const RootLayout = () => {
         </Box>
 
 
-        
+
     );
 }
 
