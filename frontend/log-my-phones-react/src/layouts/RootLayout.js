@@ -15,13 +15,13 @@ import SpaceDashboardRoundedIcon from '@mui/icons-material/SpaceDashboardRounded
 import AddIcCallRoundedIcon from '@mui/icons-material/AddIcCallRounded';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
-import { Typography } from '@mui/material';
+import { blue, } from '@mui/material/colors';
+import { Avatar, Typography } from '@mui/material';
 
 
 
 
-
-const drawerWidth = 340;
+const drawerWidth = 260;
 
 
 
@@ -56,39 +56,50 @@ const RootLayout = () => {
 
 
     return (
-        <Box sx={{ display: 'flex'
-         }}>
+        <Box sx={{
+            display: 'flex',
+
+
+        }}>
             <CssBaseline />
 
             <Drawer
+                
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
+
+
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         boxSizing: 'border-box',
+
+
+
                     },
                 }}
                 variant="permanent"
                 anchor="left"
             >
-                <ListSubheader component="div" id="nested-list-subheader">
-                    Example Ltd.
-                </ListSubheader>
+                <Toolbar sx={{m: 3}}>
+                    <Avatar sx={{mx: 3}}/>
+                    <Typography>Example Ltd.</Typography>
+                </Toolbar>
                 <Divider />
-                <List>
-                        <List >
-                            {menuItems.map(item => (
-                                <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            {item.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={item.text} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </List>
+                <List sx={{
+                    mx: 1.5
+
+                }}>
+                    {menuItems.map(item => (
+                        <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
+                            <ListItemButton sx={{ borderRadius: '16px' }}  >
+                                <ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText sx={{ fontWeight: 'medium',  }} primary={item.text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
                 </List>
                 <Divider />
 
