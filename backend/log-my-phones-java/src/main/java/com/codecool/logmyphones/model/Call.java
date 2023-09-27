@@ -24,5 +24,4 @@ public class Call {
     private CallStatus callStatus;
     private CallDirection callDirection;
     private int duration;
-
 }
