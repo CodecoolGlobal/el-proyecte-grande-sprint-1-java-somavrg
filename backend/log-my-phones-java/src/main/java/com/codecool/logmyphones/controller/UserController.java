@@ -1,6 +1,6 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.User;
+import com.codecool.logmyphones.model.CompanyUser;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -21,25 +21,25 @@ public class UserController {
 
 
     @GetMapping("")
-    public List<User> getAllUsers() {
+    public List<CompanyUser> getAllUsers() {
         //TODO: userService.getAllUsers()
         return null;
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
+    public CompanyUser getUserById(@PathVariable int id) {
         //TODO: userService.getUserById(id)
         return null;
     }
 
     @PostMapping("")
-    public boolean addNewUser(@RequestBody User user) {
+    public boolean addNewUser(@RequestBody CompanyUser user) {
         //TODO: userService.addNewUser(user)
         return false;
     }
 
     @PatchMapping("/{id}")
-    public void updateUser(@PathVariable int id, @RequestBody User userUpdate) {
+    public void updateUser(@PathVariable int id, @RequestBody CompanyUser userUpdate) {
         //TODO: userService.updateUser(id, userUpdate)
     }
 
