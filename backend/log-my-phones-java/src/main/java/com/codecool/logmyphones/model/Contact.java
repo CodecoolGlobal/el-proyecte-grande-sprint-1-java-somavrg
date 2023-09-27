@@ -19,7 +19,7 @@ public class Contact {
     @OneToOne
     private Phone phone;
     private String info;
-    @Transient
+
     @ManyToOne
-    private User user;
+    private CompanyUser user;
 }
