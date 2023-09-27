@@ -3,6 +3,7 @@ package com.codecool.logmyphones.service.callservice;
 import com.codecool.logmyphones.model.Call;
 import com.codecool.logmyphones.model.CallStatus;
 import com.codecool.logmyphones.model.DTO.CallDTO;
+import com.codecool.logmyphones.model.DTO.PhoneDTO;
 import com.codecool.logmyphones.model.Dispatcher;
 import com.codecool.logmyphones.model.repository.CallRepository;
 import com.codecool.logmyphones.model.repository.DispatcherRepository;
@@ -24,9 +25,11 @@ public class CallServiceImpl implements CallService {
     }
 
     private CallDTO convertCallToCallDTO(Call call) {
+        PhoneDTO phoneDTO = PhoneDTO.builder()
+                .phoneNumber(call.getClient().getPhoneNumber()).build();
         return CallDTO.builder()
                 .dispatcher(call.getDispatcher())
-                .client(call.getClient())
+                .client(phoneDTO)
                 .startTime(call.getStartTime())
                 .callDirection(call.getCallDirection())
                 .duration(call.getDuration()).build();
