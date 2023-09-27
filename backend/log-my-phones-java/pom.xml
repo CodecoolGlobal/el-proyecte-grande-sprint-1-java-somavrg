@@ -11,6 +11,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>com.codecool</groupId>
+    <artifactId>log-my-phones-java</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>log-my-phones</name>
+    <description>log-my-phones</description>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,19 +46,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.1.2</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.27</version>
         </dependency>
     </dependencies>
-
-    <groupId>com.codecool</groupId>
-    <artifactId>log-my-phones-java</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>log-my-phones</name>
-    <description>log-my-phones</description>
 
     <build>
         <plugins>

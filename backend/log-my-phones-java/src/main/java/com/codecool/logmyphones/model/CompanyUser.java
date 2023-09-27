@@ -11,14 +11,14 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class CompanyUser {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long userId;
    private String name;
    private String email;
-   @OneToMany(mappedBy ="user" ,cascade = CascadeType.ALL)
+   @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
    private Set<Contact> contacts;
-   @OneToMany(cascade = CascadeType.ALL)
+   @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
    private Set<Dispatcher> dispatchers;
 }
