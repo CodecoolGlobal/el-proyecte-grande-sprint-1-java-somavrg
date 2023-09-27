@@ -2,31 +2,62 @@ package com.codecool.logmyphones.service.callservice;
 
 import com.codecool.logmyphones.model.Call;
 import com.codecool.logmyphones.model.CallStatus;
-import com.codecool.logmyphones.model.DAO.CallDAO;
+import com.codecool.logmyphones.model.DTO.CallDTO;
+import com.codecool.logmyphones.model.Dispatcher;
+import com.codecool.logmyphones.model.repository.CallRepository;
+import com.codecool.logmyphones.model.repository.DispatcherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
+
 @Service
 public class CallServiceImpl implements CallService {
-    private final CallDAO callDAO;
+    private final CallRepository callRepository;
+    private final DispatcherRepository dispatcherRepository;
+
     @Autowired
-    public CallServiceImpl(CallDAO callDAO) {
-        this.callDAO = callDAO;
+    public CallServiceImpl(CallRepository callRepository, DispatcherRepository dispatcherRepository) {
+        this.callRepository = callRepository;
+        this.dispatcherRepository = dispatcherRepository;
+    }
+
+    private CallDTO convertCallToCallDTO(Call call) {
+        return CallDTO.builder()
+                .dispatcher(call.getDispatcher())
+                .client(call.getClient())
+                .startTime(call.getStartTime())
+                .callDirection(call.getCallDirection())
+                .duration(call.getDuration()).build();
+    }
+
+    private Set<CallDTO> convertCallsToCallDTOs(Set<Call> calls) {
+        Set<CallDTO> callDTOS = new HashSet<>();
+        calls.forEach(call -> callDTOS.add(convertCallToCallDTO(call)));
+        return callDTOS;
     }
 
     @Override
-    public Set<Call> getCalls(Long companyId) {
-        return null;
+    public Set<CallDTO> getCalls(Long userId) {
+        Set<Dispatcher> dispatchers = dispatcherRepository.getDispatchersByUserUserId(userId);
+        Set<Call> calls = new HashSet<>();
+        dispatchers.forEach(dispatcher -> calls.addAll(callRepository.getCallsByDispatcherDispatcherId(dispatcher.getDispatcherId())));
+        return convertCallsToCallDTOs(calls);
     }
 
     @Override
-    public Set<Call> getCallsByDispatchers(Long companyId, Set<Long> dispatcherId) {
-        return null;
+    public Set<CallDTO> getCallsByDispatchers(Long userId, Set<Long> dispatcherIds) {
+        Set<Call> calls = new HashSet<>();
+        dispatcherIds.forEach(dispatcherId -> calls.addAll(callRepository.getCallsByDispatcherDispatcherId(dispatcherId)));
+        return convertCallsToCallDTOs(calls);
     }
 
     @Override
-    public Set<Call> getCallsByStatus(CallStatus callStatus) {
-        return null;
+    public Set<CallDTO> getCallsByStatus(Long userId, CallStatus callStatus) {
+        Set<Dispatcher> dispatchers = dispatcherRepository.getDispatchersByUserUserId(userId);
+        Set<Call> calls = new HashSet<>();
+        dispatchers.forEach(dispatcher -> calls.addAll(callRepository.getCallsByDispatcherDispatcherIdAndCallStatus(dispatcher.getDispatcherId(),callStatus)));
+        return convertCallsToCallDTOs(calls);
     }
 }
