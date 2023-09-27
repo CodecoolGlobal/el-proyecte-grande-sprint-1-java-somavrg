@@ -10,11 +10,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import SpaceDashboardRoundedIcon from '@mui/icons-material/SpaceDashboardRounded';
+import AddIcCallRoundedIcon from '@mui/icons-material/AddIcCallRounded';
+import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
+import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
 
 
-const drawerWidth = 240;
+const drawerWidth = 350;
 
 
 const RootLayout = () => {
@@ -25,22 +27,22 @@ const RootLayout = () => {
     const menuItems = [
         {
             text: "Dashboard",
-            icon: <InboxIcon />,
+            icon: <SpaceDashboardRoundedIcon />,
             path: "/dashboard"
         },
         {
             text: "Contacts",
-            icon: <InboxIcon />,
+            icon: <PermContactCalendarRoundedIcon />,
             path: "/contacts"
         },
         {
             text: "Add Phone",
-            icon: <InboxIcon />,
+            icon: <AddIcCallRoundedIcon />,
             path: "/addphone"
         },
         {
             text: "Statics",
-            icon: <InboxIcon />,
+            icon: <LeaderboardRoundedIcon />,
             path: "/statics"
         }
     ]
@@ -72,7 +74,7 @@ const RootLayout = () => {
                             <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
                                 <ListItemButton>
                                     <ListItemIcon>
-                                        <MailIcon />
+                                        {item.icon}
                                     </ListItemIcon>
                                     <ListItemText primary={item.text} />
                                 </ListItemButton>
