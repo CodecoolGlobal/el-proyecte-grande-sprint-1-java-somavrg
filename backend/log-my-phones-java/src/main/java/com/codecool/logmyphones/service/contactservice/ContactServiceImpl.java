@@ -8,9 +8,11 @@ import com.codecool.logmyphones.model.repository.ContactRepository;
 import com.codecool.logmyphones.model.repository.UserRepository;
 import com.codecool.logmyphones.service.mapper.ContactMapper;
 import com.codecool.logmyphones.service.mapper.NewContactMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -43,7 +45,8 @@ public class ContactServiceImpl implements ContactService {
     public void addNewContact(NewContactDTO contactDTO) {
         CompanyUser user = userRepository.getById(contactDTO.userUserId());
         Contact newContact = newContactMapper.toContact(contactDTO);
-        user.addContact(newContact);
+//        user.addContact(newContact);
+        newContact.setUser(user);
         contactRepository.save(newContact);
     }
 
