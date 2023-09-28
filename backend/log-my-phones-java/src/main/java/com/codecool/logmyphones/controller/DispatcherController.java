@@ -1,6 +1,6 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Dispatcher;
+import com.codecool.logmyphones.model.DTO.DispatcherDTO;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -21,34 +21,32 @@ public class DispatcherController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Dispatcher> getAllDispatchersByCompany(@PathVariable int companyId) {
+    public Set<DispatcherDTO> getAllDispatchersByCompany(@PathVariable Long companyId) {
         //TODO: dispatcherService.getDispatchersByCompanyId(companyId)
         return null;
     }
 
     @GetMapping("/{companyId}/{id}")
-    public Dispatcher getDispatcherById(@PathVariable int companyId, @PathVariable int id) {
+    public DispatcherDTO getDispatcherById(@PathVariable Long companyId, @PathVariable Long id) {
         // TODO: dispatcherService.getDispatcherById(id)
         return null;
     }
 
     @PostMapping("/{companyId}")
-    public boolean addNewDispatcher(@PathVariable int companyId, @RequestBody Dispatcher dispatcher) {
+    public void addNewDispatcher(@PathVariable Long companyId, @RequestBody DispatcherDTO dispatcher) {
         // TODO: dispatcherService.addNewDispatcher(dispatcher)
-        return false;
     }
 
     @PatchMapping("/{companyId}/{id}")
-    public void updateDispatcherById(@PathVariable int companyId,
-                                     @PathVariable int id,
-                                     @RequestBody Dispatcher dispatcherUpdate) {
+    public void updateDispatcherById(@PathVariable Long companyId,
+                                     @PathVariable Long id,
+                                     @RequestBody DispatcherDTO dispatcherUpdate) {
         // TODO: dispatcherService.updateDispatcher(id, dispatcherUpdate)
     }
 
     @DeleteMapping("/{companyId}/{id}")
-    public boolean deleteDispatcher(@PathVariable int companyId, @PathVariable int id) {
+    public void deleteDispatcher(@PathVariable Long companyId, @PathVariable Long id) {
         // TODO: dispatcherService.deleteDispatcherById(id)
-        return false;
     }
 }
 
