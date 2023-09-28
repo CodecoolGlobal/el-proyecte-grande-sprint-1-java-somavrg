@@ -1,31 +1,22 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Phone;
+import com.codecool.logmyphones.model.DTO.PhoneDTO;
+import com.codecool.logmyphones.service.phoneservice.PhoneService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/phones")
 public class PhoneController {
+    private final PhoneService phoneService;
 
-    //TODO service
-
-    //    private final PhoneService phoneService;
-    //
-    //    @Autowired
-    //    public PhoneController(PhoneService phoneService) {
-    //        this.phoneService = phoneService;
-    //    }
-
-
-    @GetMapping("/{id}")
-    public Phone getDispatcherById(@PathVariable int id) {
-        // TODO: phoneService.getPhoneById(id)
-        return null;
+    @Autowired
+    public PhoneController(PhoneService phoneService) {
+        this.phoneService = phoneService;
     }
 
     @PostMapping("")
-    public boolean addNewPhone(@RequestBody Phone phone) {
-        //TODO: phoneService.addNewPhone(phone)
-        return false;
+    public void addNewPhone(@RequestBody PhoneDTO phone) {
+        phoneService.addNewPhone(phone);
     }
 }
