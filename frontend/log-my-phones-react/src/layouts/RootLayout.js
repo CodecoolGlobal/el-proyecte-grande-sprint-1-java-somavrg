@@ -15,12 +15,19 @@ import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
 import { Avatar, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
+import Menu from '@mui/material/Menu';
 
 
 
 
 
-const drawerWidth = 260;
+
+
+const drawerWidth = 280;
 
 const theme = createTheme({
     palette: {
@@ -34,7 +41,14 @@ const theme = createTheme({
 
 const RootLayout = () => {
 
-
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -89,11 +103,35 @@ const RootLayout = () => {
                         alignItems: 'center',
                         m: 3
                     }}>
+
                         <Avatar sx={{ marginRight: 3 }} />
+
                         <Box>
                             <Typography sx={{ fontSize: 12, }}>Logged in as</Typography>
                             <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>Example Ltd.</Typography>
                         </Box>
+                        <Box >
+                            <IconButton id="fade-button"
+                                aria-controls={open ? 'fade-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}>
+                                <KeyboardArrowDownIcon sx={{ marginLeft: 2, color: "dark" }}></KeyboardArrowDownIcon>
+                            </IconButton>
+                            <Menu
+                                id="fade-menu"
+                                MenuListProps={{
+                                    'aria-labelledby': 'fade-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                TransitionComponent={Fade}
+                            >
+                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            </Menu>
+                        </Box >
                     </Box>
                     <List sx={{
                         mx: 1.5
