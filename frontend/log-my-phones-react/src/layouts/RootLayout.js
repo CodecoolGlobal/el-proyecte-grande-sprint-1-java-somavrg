@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,6 +37,7 @@ const RootLayout = () => {
 
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const menuItems = [
         {
@@ -98,12 +99,13 @@ const RootLayout = () => {
                             <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
                                 <ListItemButton sx={{
                                     borderRadius: '16px',
+                                    backgroundColor: location.pathname === item.path ? "hover" : "transparent",
+                                    color: location.pathname === item.path ? "light" : "dark",
+                                    '& .MuiListItemIcon-root': {
+                                        color: location.pathname === item.path ? "light" : "dark",
+                                    },
                                     '&:hover': {
-                                        backgroundColor: "hover",
-                                        color: "light",
-                                        '& .MuiListItemIcon-root': {
-                                            color: "light",
-                                        },
+                                        backgroundColor: location.pathname === item.path ? "hover" : "hover",
                                     },
                                 }}  >
                                     <ListItemIcon sx={{ color: 'dark' }} >
