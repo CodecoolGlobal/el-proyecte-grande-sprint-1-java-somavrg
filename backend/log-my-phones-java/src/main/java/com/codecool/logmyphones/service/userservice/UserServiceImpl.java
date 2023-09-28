@@ -7,6 +7,7 @@ import com.codecool.logmyphones.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNewUser(UserDTO newUserDTO) {
-        userRepository.save(userMapper.toCompanyUser(newUserDTO));
+        CompanyUser user = userMapper.toCompanyUser(newUserDTO);
+        user.setContacts(new HashSet<>());
+        user.setDispatchers(new HashSet<>());
+        userRepository.save(user);
     }
 
     @Override

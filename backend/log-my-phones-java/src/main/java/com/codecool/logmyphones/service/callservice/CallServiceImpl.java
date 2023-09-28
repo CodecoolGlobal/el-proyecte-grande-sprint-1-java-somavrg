@@ -48,4 +48,9 @@ public class CallServiceImpl implements CallService {
         dispatchers.forEach(dispatcher -> calls.addAll(callRepository.getCallsByDispatcherDispatcherIdAndCallStatus(dispatcher.getDispatcherId(),callStatus)));
         return callMapper.toCallDTOs(calls);
     }
+
+    @Override
+    public void addNewCall(CallDTO call) {
+        callRepository.save(callMapper.toCall(call));
+    }
 }

@@ -19,7 +19,6 @@ public class Contact {
     @OneToOne
     private Phone phone;
     private String info;
-
     @ManyToOne
     private CompanyUser user;
 }

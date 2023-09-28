@@ -21,4 +21,6 @@ public class CompanyUser {
    private Set<Contact> contacts;
    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
    private Set<Dispatcher> dispatchers;
+
+   public void addContact(Contact contact){contacts.add(contact);}
 }

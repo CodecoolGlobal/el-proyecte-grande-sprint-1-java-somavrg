@@ -1,6 +1,7 @@
 package com.codecool.logmyphones.controller;
 
 import com.codecool.logmyphones.model.DTO.ContactDTO;
+import com.codecool.logmyphones.model.DTO.NewContactDTO;
 import com.codecool.logmyphones.service.contactservice.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public void addNewContact(@RequestBody ContactDTO contact) {
+    public void addNewContact(@RequestBody NewContactDTO contact) {
         contactService.addNewContact(contact);
     }
 
