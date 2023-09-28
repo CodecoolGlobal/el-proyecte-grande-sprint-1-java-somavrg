@@ -12,7 +12,7 @@ public interface PhoneMapper {
 
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     PhoneDTO toPhoneDTO(Phone phone);
-    Set<PhoneDTO> toPhoneDTOs(Phone phone);
+    Set<PhoneDTO> toPhoneDTOs(Set<Phone> phone);
     Phone toPhone(PhoneDTO phoneDTO);
     Set<Phone> toPhones(Set<PhoneDTO> phoneDTO);
 }
