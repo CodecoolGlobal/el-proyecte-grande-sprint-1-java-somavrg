@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 public interface PhoneMapper {
 
     @Mapping(source = "phoneNumber", target = "phoneNumber")
-    PhoneDTO toPhone(Phone phone);
-    Phone toPhoneDTO(PhoneDTO phoneDTO);
+    PhoneDTO toPhoneDTO(Phone phone);
+    Phone toPhone(PhoneDTO phoneDTO);
 }
