@@ -20,6 +20,6 @@ public class Contact {
     private Phone phone;
     private String info;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private CompanyUser user;
 }
