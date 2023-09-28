@@ -7,4 +7,4 @@ import java.util.Set;
 public record DispatcherDTO(
         String name,
         PhoneDTO phone,
-        Set<CallDTO> callDTOS) {}
+        Set<CallDTO> calls) {}
