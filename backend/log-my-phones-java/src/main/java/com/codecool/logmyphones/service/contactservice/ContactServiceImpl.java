@@ -1,23 +1,31 @@
 package com.codecool.logmyphones.service.contactservice;
 
+import com.codecool.logmyphones.model.CompanyUser;
+import com.codecool.logmyphones.model.Contact;
 import com.codecool.logmyphones.model.DTO.ContactDTO;
+import com.codecool.logmyphones.model.DTO.NewContactDTO;
 import com.codecool.logmyphones.model.repository.ContactRepository;
+import com.codecool.logmyphones.model.repository.UserRepository;
 import com.codecool.logmyphones.service.mapper.ContactMapper;
+import com.codecool.logmyphones.service.mapper.NewContactMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService {
     private final ContactRepository contactRepository;
     private final ContactMapper contactMapper;
+    private final NewContactMapper newContactMapper;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper) {
+    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper, NewContactMapper newContactMapper, UserRepository userRepository) {
         this.contactRepository = contactRepository;
         this.contactMapper = contactMapper;
+        this.newContactMapper = newContactMapper;
+        this.userRepository = userRepository;
     }
 
 
@@ -32,8 +40,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void addNewContact(ContactDTO contactDTO) {
-        contactRepository.save(contactMapper.toContact(contactDTO));
+    public void addNewContact(NewContactDTO contactDTO) {
+        CompanyUser user = userRepository.getById(contactDTO.userUserId());
+        Contact newContact = newContactMapper.toContact(contactDTO);
+        user.addContact(newContact);
+        contactRepository.save(newContact);
     }
 
     @Override
