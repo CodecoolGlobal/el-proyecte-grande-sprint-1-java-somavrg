@@ -8,4 +8,4 @@ import java.util.Set;
 public record UserDTO(String name,
                       String email,
                       Set<ContactDTO> contactDTOs,
-                      Set<Dispatcher> dispatchers) {}
+                      Set<DispatcherDTO> dispatchers) {}
