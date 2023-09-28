@@ -70,9 +70,9 @@ const RootLayout = () => {
             path: "/addphone"
         },
         {
-            text: "Statics",
+            text: "Statistics",
             icon: <LeaderboardRoundedIcon />,
-            path: "/statics"
+            path: "/statistics"
         }
     ]
 
@@ -153,7 +153,6 @@ const RootLayout = () => {
                                     </ListItemIcon>
                                     <ListItemText primary={item.text} primaryTypographyProps={{
                                         sx: {
-                                            fontSize: '18px',
                                         },
                                     }} />
                                 </ListItemButton>
@@ -166,7 +165,6 @@ const RootLayout = () => {
                 component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
-                <Toolbar />
                 <Outlet />
             </Box>
         </Box>
