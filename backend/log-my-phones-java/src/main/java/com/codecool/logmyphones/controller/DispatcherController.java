@@ -2,6 +2,7 @@ package com.codecool.logmyphones.controller;
 
 import com.codecool.logmyphones.model.DTO.DispatcherDTO;
 
+import com.codecool.logmyphones.model.DTO.NewDispatcherDTO;
 import com.codecool.logmyphones.service.dispatcherservice.DispatcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class DispatcherController {
     }
 
     @PostMapping
-    public void addNewDispatcher(@RequestBody DispatcherDTO dispatcher) {
+    public void addNewDispatcher(@RequestBody NewDispatcherDTO dispatcher) {
         dispatcherService.addNewDispatcher(dispatcher);
     }
 

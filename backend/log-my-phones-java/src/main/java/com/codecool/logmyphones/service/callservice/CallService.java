@@ -10,4 +10,5 @@ public interface CallService {
     Set<CallDTO> getCalls(Long userId);
     Set<CallDTO> getCallsByDispatchers(Long companyId,Set<Long> dispatcherId);
     Set<CallDTO> getCallsByStatus(Long userId,CallStatus callStatus);
+    void addNewCall(CallDTO call);
 }

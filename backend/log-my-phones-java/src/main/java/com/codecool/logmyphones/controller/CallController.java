@@ -33,4 +33,9 @@ public class CallController {
     public Set<CallDTO> getAllCallsByStatus(@PathVariable Long companyId, @RequestBody CallStatus callStatus) {
         return callService.getCallsByStatus(companyId, callStatus);
     }
-}
+
+    @PostMapping
+    public void addNewCall(@RequestBody CallDTO call){
+        callService.addNewCall(call);
+    }
+ }

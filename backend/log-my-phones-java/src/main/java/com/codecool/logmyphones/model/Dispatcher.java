@@ -18,10 +18,10 @@ public class Dispatcher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dispatcherId;
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Phone phone;
     @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL)
     private Set<Call> calls;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private CompanyUser user;
 }
