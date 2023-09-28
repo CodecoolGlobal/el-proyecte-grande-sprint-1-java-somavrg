@@ -19,7 +19,6 @@ public class Contact {
     @OneToOne
     private Phone phone;
     private String info;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private CompanyUser user;
 }
