@@ -6,7 +6,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 function CallTableDurationCell({duration}) {
     return (
         <Grid container alignItems='center'>
-            <AccessTimeIcon sx={{display: 'inline-block', marginRight: '8px'}}/>
+            <AccessTimeIcon fontSize='small' sx={{display: 'inline-block', marginRight: '8px'}}/>
             <Typography sx={{display: 'inline-block'}}>{duration}</Typography>
         </Grid>
     );

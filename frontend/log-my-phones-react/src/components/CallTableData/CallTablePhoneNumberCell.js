@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 function CallTablePhoneNumberCell({phoneNumber}) {
     return (
         <Grid container alignItems='center'>
-            <PhoneIcon sx={{display: 'inline-block', marginRight: '8px'}}/>
+            <PhoneIcon fontSize='small' sx={{display: 'inline-block', marginRight: '8px'}}/>
             <Typography sx={{display: 'inline-block'}}>{phoneNumber}</Typography>
         </Grid>
     );
