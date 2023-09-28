@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DashboardCardIcon from "./DashboardCardIcon";
 
 const theme = createTheme({
     typography: {
@@ -15,12 +16,11 @@ const theme = createTheme({
     }
 });
 
-function DashboardCard({ data }) {
-    console.log(theme.palette[`${data.infoType}`].main)
-    console.log(theme.palette[`${data.infoType}`].main + '00')
+function DashboardCard({data}) {
+    const infoTypeColor = theme.palette[`${data.infoType}`].light;
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <Card elevation={2} sx={{
                 borderRadius: 4,
                 background: `linear-gradient(to bottom right,
@@ -32,25 +32,25 @@ function DashboardCard({ data }) {
                     sx={{
                         mx: 5,
                         my: 2,
-                    display: 'flex',
+                        display: 'flex',
                         gap: '24px',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center'
-}}>
-
-                        {data.icon}
-
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                    }}>
+                    <Box>
+                        <DashboardCardIcon icon={data.icon} color={infoTypeColor} />
+                    </Box>
                     <Box sx={{
                         display: 'inline'
                     }}>
                         <Box sx={{
-                            display:'inline-block'
+                            display: 'inline-block'
                         }}>
                             <Box sx={{
                                 fontWeight: 'light',
                                 color: 'text.secondary',
                             }}>{data.title}</Box>
-                            <Box sx={{my:0.5}}>
+                            <Box sx={{my: 0.5}}>
                                 <Typography variant={"h4"} sx={{
                                     color: 'text.primary',
                                     fontWeight: 'bold'
@@ -62,7 +62,7 @@ function DashboardCard({ data }) {
                         </Box>
                     </Box>
                 </CardContent>
-                <Divider />
+                <Divider/>
                 <CardActions>
                     <Button size="small" sx={{
                         color: 'text.primary',
