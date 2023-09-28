@@ -11,7 +11,7 @@ public interface CallMapper {
     @Mapping(source = "callStatus", target = "callStatus")
     @Mapping(source = "callDirection", target = "callDirection")
     @Mapping(source = "duration", target = "duration")
-    CallDTO toCall(Call call);
-    Call toCallDTO(CallDTO callDTO);
+    CallDTO toCallDTO(Call call);
+    Call toCall(CallDTO callDTO);
 
 }
