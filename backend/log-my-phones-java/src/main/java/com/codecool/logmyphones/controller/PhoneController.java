@@ -1,6 +1,6 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Phone;
+import com.codecool.logmyphones.model.DTO.PhoneDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,14 +18,13 @@ public class PhoneController {
 
 
     @GetMapping("/{id}")
-    public Phone getDispatcherById(@PathVariable int id) {
+    public PhoneDTO getDispatcherById(@PathVariable Long id) {
         // TODO: phoneService.getPhoneById(id)
         return null;
     }
 
     @PostMapping("")
-    public boolean addNewPhone(@RequestBody Phone phone) {
+    public void addNewPhone(@RequestBody PhoneDTO phone) {
         //TODO: phoneService.addNewPhone(phone)
-        return false;
     }
 }

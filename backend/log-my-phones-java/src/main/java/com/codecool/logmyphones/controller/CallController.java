@@ -1,8 +1,7 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Call;
-
 import com.codecool.logmyphones.model.CallStatus;
+import com.codecool.logmyphones.model.DTO.CallDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -22,19 +21,20 @@ public class CallController {
 
 
     @GetMapping("/{companyId}")
-    public Set<Call> getAllCallsByCompany(@PathVariable int companyId) {
+    public Set<CallDTO> getAllCallsByCompany(@PathVariable Long companyId) {
         //TODO: callService.getCalls()
         return null;
     }
 
     @GetMapping("/{companyId}/byDispatchers")
-    public Set<Call> getAllCallsByDispatchers(@PathVariable int companyId, @RequestBody Set<Integer> dispatcherIds) {
+    public Set<CallDTO> getAllCallsByDispatchers(@PathVariable Long companyId,
+                                                 @RequestBody Set<Long> dispatcherIds) {
         //TODO: callService.getCallsByDispatchers()
         return null;
     }
 
     @GetMapping("/{companyId}/byStatus")
-    public Set<Call> getAllCallsByStatus(@PathVariable int companyId, @RequestBody CallStatus callStatus) {
+    public Set<CallDTO> getAllCallsByStatus(@PathVariable Long companyId, @RequestBody CallStatus callStatus) {
         //TODO: callService.getCallsByStatus(callStatus)
         return null;
     }
