@@ -1,51 +1,44 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.CompanyUser;
-
+import com.codecool.logmyphones.model.DTO.UserDTO;
+import com.codecool.logmyphones.service.userservice.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserService userService;
 
-    //TODO service
-
-    //    private final UserService userService;
-    //
-    //    @Autowired
-    //    public UserController(UserService userService) {
-    //        this.userService = userService;
-    //    }
-
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("")
-    public List<CompanyUser> getAllUsers() {
-        //TODO: userService.getAllUsers()
-        return null;
+    public Set<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public CompanyUser getUserById(@PathVariable int id) {
-        //TODO: userService.getUserById(id)
-        return null;
+    public UserDTO getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping("")
-    public boolean addNewUser(@RequestBody CompanyUser user) {
-        //TODO: userService.addNewUser(user)
-        return false;
+    public void addNewUser(@RequestBody UserDTO user) {
+        userService.addNewUser(user);
     }
 
     @PatchMapping("/{id}")
-    public void updateUser(@PathVariable int id, @RequestBody CompanyUser userUpdate) {
-        //TODO: userService.updateUser(id, userUpdate)
+    public void updateUser(@PathVariable Long id, @RequestBody UserDTO userUpdate) {
+        userService.updateUser(id, userUpdate);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteUser(@PathVariable int id) {
-        //TODO: userService.deleteUserById(id)
-        return false;
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 }

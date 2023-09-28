@@ -1,7 +1,9 @@
 package com.codecool.logmyphones.controller;
 
-import com.codecool.logmyphones.model.Dispatcher;
+import com.codecool.logmyphones.model.DTO.DispatcherDTO;
 
+import com.codecool.logmyphones.service.dispatcherservice.DispatcherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -9,46 +11,37 @@ import java.util.Set;
 @RestController
 @RequestMapping("/dispatchers")
 public class DispatcherController {
+    private final DispatcherService dispatcherService;
 
-    //TODO service
-
-    //    private final DispatcherService dispatcherService;
-    //
-    //    @Autowired
-    //    public DispatcherController(DispatcherService dispatcherService) {
-    //        this.dispatcherService = dispatcherService;
-    //    }
-
+    @Autowired
+    public DispatcherController(DispatcherService dispatcherService) {
+        this.dispatcherService = dispatcherService;
+    }
 
     @GetMapping("/{companyId}")
-    public Set<Dispatcher> getAllDispatchersByCompany(@PathVariable int companyId) {
-        //TODO: dispatcherService.getDispatchersByCompanyId(companyId)
-        return null;
+    public Set<DispatcherDTO> getAllDispatchersByCompany(@PathVariable Long companyId) {
+        return dispatcherService.getAllDispatchers(companyId);
     }
 
-    @GetMapping("/{companyId}/{id}")
-    public Dispatcher getDispatcherById(@PathVariable int companyId, @PathVariable int id) {
-        // TODO: dispatcherService.getDispatcherById(id)
-        return null;
+    @GetMapping("/dispatcher/{id}")
+    public DispatcherDTO getDispatcherById(@PathVariable Long id) {
+        return dispatcherService.getDispatcherById(id);
     }
 
-    @PostMapping("/{companyId}")
-    public boolean addNewDispatcher(@PathVariable int companyId, @RequestBody Dispatcher dispatcher) {
-        // TODO: dispatcherService.addNewDispatcher(dispatcher)
-        return false;
+    @PostMapping
+    public void addNewDispatcher(@RequestBody DispatcherDTO dispatcher) {
+        dispatcherService.addNewDispatcher(dispatcher);
     }
 
-    @PatchMapping("/{companyId}/{id}")
-    public void updateDispatcherById(@PathVariable int companyId,
-                                     @PathVariable int id,
-                                     @RequestBody Dispatcher dispatcherUpdate) {
-        // TODO: dispatcherService.updateDispatcher(id, dispatcherUpdate)
+    @PatchMapping("/dispatcher/{id}")
+    public void updateDispatcherById(@PathVariable Long id,
+                                     @RequestBody DispatcherDTO dispatcherUpdate) {
+        dispatcherService.updateDispatcher(id, dispatcherUpdate);
     }
 
-    @DeleteMapping("/{companyId}/{id}")
-    public boolean deleteDispatcher(@PathVariable int companyId, @PathVariable int id) {
-        // TODO: dispatcherService.deleteDispatcherById(id)
-        return false;
+    @DeleteMapping("/dispatcher/{id}")
+    public void deleteDispatcher(@PathVariable Long id) {
+        dispatcherService.deleteDispatcher(id);
     }
 }
 
