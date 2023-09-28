@@ -27,6 +27,7 @@ import Menu from '@mui/material/Menu';
 
 
 
+
 const drawerWidth = 280;
 
 const theme = createTheme({
@@ -91,8 +92,6 @@ const RootLayout = () => {
                             boxSizing: 'border-box',
                             backgroundColor: "main",
                             color: "dark"
-
-
                         },
                     }}
                     variant="permanent"
