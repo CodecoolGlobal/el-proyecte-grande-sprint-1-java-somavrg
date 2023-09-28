@@ -22,8 +22,8 @@ public class ContactServiceImpl implements ContactService {
 
 
     @Override
-    public Set<ContactDTO> getAllContacts() {
-        return contactMapper.toContactDTOs(contactRepository.findAll().stream().collect(Collectors.toSet()));
+    public Set<ContactDTO> getAllContacts(Long companyId) {
+        return contactMapper.toContactDTOs(contactRepository.getContactsByUserUserId(companyId));
     }
 
     @Override

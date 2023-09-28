@@ -21,8 +21,8 @@ public class DispatcherServiceImpl implements DispatcherService {
     }
 
     @Override
-    public Set<DispatcherDTO> getAllDispatchers() {
-        return dispatcherMapper.toDispatcherDTOs(dispatcherRepository.findAll().stream().collect(Collectors.toSet()));
+    public Set<DispatcherDTO> getAllDispatchers(Long companyId) {
+        return dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUserUserId(companyId));
     }
 
     @Override
