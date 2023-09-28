@@ -5,7 +5,6 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -78,6 +77,8 @@ const RootLayout = () => {
                             boxSizing: 'border-box',
                             backgroundColor: "main",
                             color: "dark"
+
+
                         },
                     }}
                     variant="permanent"
@@ -88,15 +89,17 @@ const RootLayout = () => {
                         alignItems: 'center',
                         m: 3
                     }}>
-                        <Avatar sx={{ mx: 3 }} />
-                        <Typography sx={{ lineHeight: 'normal' }}>Example Ltd.</Typography>
+                        <Avatar sx={{ marginRight: 3 }} />
+                        <Box>
+                            <Typography sx={{ fontSize: 12, }}>Logged in as</Typography>
+                            <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>Example Ltd.</Typography>
+                        </Box>
                     </Box>
-                    <Divider sx={{ backgroundColor: "dark" }} />
                     <List sx={{
                         mx: 1.5
                     }}>
                         {menuItems.map(item => (
-                            <ListItem key={item.text} disablePadding onClick={() => (navigate(item.path))}>
+                            <ListItem key={item.text} sx={{ my: 1 }} disablePadding onClick={() => (navigate(item.path))}>
                                 <ListItemButton sx={{
                                     borderRadius: '16px',
                                     backgroundColor: location.pathname === item.path ? "hover" : "transparent",
@@ -111,12 +114,15 @@ const RootLayout = () => {
                                     <ListItemIcon sx={{ color: 'dark' }} >
                                         {item.icon}
                                     </ListItemIcon>
-                                    <ListItemText sx={{ fontWeight: 'medium', }} primary={item.text} />
+                                    <ListItemText primary={item.text} primaryTypographyProps={{
+                                        sx: {
+                                            fontSize: '18px',
+                                        },
+                                    }} />
                                 </ListItemButton>
                             </ListItem>
                         ))}
                     </List>
-                    <Divider sx={{ backgroundColor: "dark" }} />
                 </Drawer>
             </ThemeProvider>
             <Box
