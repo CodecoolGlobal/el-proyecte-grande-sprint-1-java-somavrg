@@ -7,6 +7,8 @@ import com.codecool.logmyphones.service.mapper.PhoneMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class PhoneServiceImpl implements PhoneService {
     private final PhoneRepository phoneRepository;
@@ -19,6 +21,8 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public void addNewPhone(PhoneDTO phoneDTO) {
-        phoneRepository.save(phoneMapper.toPhone(phoneDTO));
+        Phone phone = phoneMapper.toPhone(phoneDTO);
+        phone.setCall(new HashSet<>());
+        phoneRepository.save(phone);
     }
 }

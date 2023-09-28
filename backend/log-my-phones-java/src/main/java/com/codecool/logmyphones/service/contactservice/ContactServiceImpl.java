@@ -45,7 +45,6 @@ public class ContactServiceImpl implements ContactService {
     public void addNewContact(NewContactDTO contactDTO) {
         CompanyUser user = userRepository.getById(contactDTO.userUserId());
         Contact newContact = newContactMapper.toContact(contactDTO);
-//        user.addContact(newContact);
         newContact.setUser(user);
         contactRepository.save(newContact);
     }
