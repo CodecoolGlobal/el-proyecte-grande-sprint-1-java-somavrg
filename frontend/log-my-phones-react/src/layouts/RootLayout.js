@@ -70,9 +70,9 @@ const RootLayout = () => {
             path: "/addphone"
         },
         {
-            text: "Statics",
+            text: "Statistics",
             icon: <LeaderboardRoundedIcon />,
-            path: "/statics"
+            path: "/statistics"
         }
     ]
 
