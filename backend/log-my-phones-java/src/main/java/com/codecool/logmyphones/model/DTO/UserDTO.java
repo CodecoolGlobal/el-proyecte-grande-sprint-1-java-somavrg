@@ -7,5 +7,5 @@ import java.util.Set;
 @Builder
 public record UserDTO(String name,
                       String email,
-                      Set<ContactDTO> contactDTOs,
+                      Set<ContactDTO> contacts,
                       Set<DispatcherDTO> dispatchers) {}
