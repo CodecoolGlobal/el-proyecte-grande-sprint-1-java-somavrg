@@ -17,10 +17,16 @@ public class CompanyUser {
    private Long userId;
    private String name;
    private String email;
+   private String password;
+
+   @Enumerated(EnumType.STRING)
+   private UserRole role;
+
    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
    private Set<Contact> contacts;
    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
    private Set<Dispatcher> dispatchers;
+
 
    public void addContact(Contact contact){contacts.add(contact);}
 }
