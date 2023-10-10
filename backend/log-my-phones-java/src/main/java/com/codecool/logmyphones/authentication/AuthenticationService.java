@@ -4,6 +4,7 @@ import com.codecool.logmyphones.model.CompanyUser;
 import com.codecool.logmyphones.model.DTO.RegisterUserDTO;
 import com.codecool.logmyphones.model.UserRole;
 import com.codecool.logmyphones.model.repository.UserRepository;
+import com.codecool.logmyphones.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    // jwtservice
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
 
