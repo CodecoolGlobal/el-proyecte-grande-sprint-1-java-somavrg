@@ -1,12 +1,8 @@
 package com.codecool.logmyphones.authentication;
 
-import com.codecool.logmyphones.model.CompanyUser;
-import com.codecool.logmyphones.model.DTO.RegisterUserDTO;
+import com.codecool.logmyphones.model.DTO.UserCredentialDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,8 +11,17 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public RegisterUserDTO register(@RequestBody RegisterUserDTO registerUserDTO) {
+    public UserCredentialDTO register(@RequestBody UserCredentialDTO registerUserDTO) {
         return authenticationService.register(registerUserDTO);
     }
 
+    @PostMapping("/authenticate")
+    public AuthenticationResponse authenticate(@RequestBody UserCredentialDTO registerUserDTO) {
+        return authenticationService.authenticate(registerUserDTO);
+    }
+
+//    @GetMapping("/authenticate")
+//    public void authenticattte(@RequestBody UserCredentialDTO registerUserDTO) {
+//        System.out.println(registerUserDTO.email());
+//    }
 }
