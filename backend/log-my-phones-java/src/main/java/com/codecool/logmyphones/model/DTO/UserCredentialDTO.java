@@ -3,7 +3,9 @@ package com.codecool.logmyphones.model.DTO;
 import lombok.Builder;
 
 @Builder
-public record RegisterUserDTO (
+public record UserCredentialDTO(
         String name,
         String email,
         String password){}
+
+
