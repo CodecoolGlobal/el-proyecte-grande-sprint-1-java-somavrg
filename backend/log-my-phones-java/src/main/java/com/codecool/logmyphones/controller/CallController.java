@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/calls")
+@RequestMapping("/api/calls")
 public class CallController {
     private final CallService callService;
 
