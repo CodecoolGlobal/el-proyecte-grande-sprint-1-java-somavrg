@@ -20,9 +20,8 @@ public class AuthenticationController {
         return authenticationService.authenticate(registerUserDTO);
     }
 
-    @GetMapping("/authenticate")
-    public void authenticattte(@RequestBody UserCredentialDTO registerUserDTO) {
-        System.out.println("hello");
-    }
-
+//    @GetMapping("/authenticate")
+//    public void authenticattte(@RequestBody UserCredentialDTO registerUserDTO) {
+//        System.out.println(registerUserDTO.email());
+//    }
 }
