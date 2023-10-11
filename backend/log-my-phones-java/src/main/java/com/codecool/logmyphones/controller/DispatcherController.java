@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/dispatchers")
+@RequestMapping("/api/dispatchers")
 public class DispatcherController {
     private final DispatcherService dispatcherService;
 
