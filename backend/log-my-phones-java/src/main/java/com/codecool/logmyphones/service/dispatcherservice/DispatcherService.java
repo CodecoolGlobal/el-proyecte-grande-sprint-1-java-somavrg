@@ -2,13 +2,15 @@ package com.codecool.logmyphones.service.dispatcherservice;
 
 import com.codecool.logmyphones.model.DTO.DispatcherDTO;
 import com.codecool.logmyphones.model.DTO.NewDispatcherDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
 public interface DispatcherService {
-    Set<DispatcherDTO> getAllDispatchers(Long companyId);
-    DispatcherDTO getDispatcherById(Long id);
-    void addNewDispatcher(NewDispatcherDTO dispatcherDTO);
-    void updateDispatcher(Long id, DispatcherDTO dispatcherDTO);
-    void deleteDispatcher(Long id);
+    ResponseEntity<Set<DispatcherDTO>> getAllDispatchers(Long companyId);
+    ResponseEntity<DispatcherDTO> getDispatcherById(Long id);
+    ResponseEntity<NewDispatcherDTO> addNewDispatcher(NewDispatcherDTO dispatcherDTO);
+    ResponseEntity<DispatcherDTO> updateDispatcher(Long id, DispatcherDTO dispatcherDTO);
+    HttpStatus deleteDispatcher(Long id);
 }
