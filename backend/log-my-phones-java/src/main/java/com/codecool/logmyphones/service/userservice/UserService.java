@@ -10,9 +10,9 @@ import java.util.Set;
 
 public interface UserService {
     ResponseEntity<Set<UserDTO>> getAllUsers();
-    ResponseEntity<UserDTO> getUserById(Long id);
+    ResponseEntity<UserDTO> getUserById(String token);
     ResponseEntity<UserDTO> addNewUser(UserDTO userDTO);
-    ResponseEntity<UserDTO> updateUser(Long id, UserDTO userDTO);
-    HttpStatus deleteUser(Long id);
+    ResponseEntity<UserDTO> updateUser(String token, UserDTO userDTO);
+    HttpStatus deleteUser(String token);
     Optional<CompanyUser> getUserByEmail(String email);
 }
