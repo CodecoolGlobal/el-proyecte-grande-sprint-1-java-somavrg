@@ -5,6 +5,8 @@ import com.codecool.logmyphones.model.DTO.UserDTO;
 import com.codecool.logmyphones.model.repository.UserRepository;
 import com.codecool.logmyphones.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -24,32 +26,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<UserDTO> getAllUsers() {
-        return userMapper.toUserDTOs(userRepository.findAll().stream().collect(Collectors.toSet()));
+    public ResponseEntity<Set<UserDTO>> getAllUsers() {
+        return new ResponseEntity<>(
+                userMapper.toUserDTOs(new HashSet<>(userRepository.findAll())),
+                HttpStatus.OK);
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
-        return userMapper.toUserDTO(userRepository.getById(id));
+    public ResponseEntity<UserDTO> getUserById(Long id) {
+        return new ResponseEntity<>(userMapper.toUserDTO(userRepository.getById(id)), HttpStatus.OK);
     }
 
     @Override
-    public void addNewUser(UserDTO newUserDTO) {
+    public ResponseEntity<UserDTO> addNewUser(UserDTO newUserDTO) {
         CompanyUser user = userMapper.toCompanyUser(newUserDTO);
         user.setContacts(new HashSet<>());
         user.setDispatchers(new HashSet<>());
         userRepository.save(user);
+        return new ResponseEntity<>(newUserDTO, HttpStatus.OK);
     }
 
     @Override
-    public void updateUser(Long id, UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(Long id, UserDTO userDTO) {
         CompanyUser userToUpdate = userRepository.getById(id);
-
+        return null;
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public HttpStatus deleteUser(Long id) {
         userRepository.deleteById(id);
+        return HttpStatus.NO_CONTENT;
     }
 
     @Override

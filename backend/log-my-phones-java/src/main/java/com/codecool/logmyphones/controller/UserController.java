@@ -3,6 +3,8 @@ package com.codecool.logmyphones.controller;
 import com.codecool.logmyphones.model.DTO.UserDTO;
 import com.codecool.logmyphones.service.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -18,27 +20,27 @@ public class UserController {
     }
 
     @GetMapping("")
-    public Set<UserDTO> getAllUsers() {
+    public ResponseEntity<Set<UserDTO>> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping("")
-    public void addNewUser(@RequestBody UserDTO user) {
-        userService.addNewUser(user);
+    public ResponseEntity<UserDTO> addNewUser(@RequestBody UserDTO user) {
+        return userService.addNewUser(user);
     }
 
     @PatchMapping("/{id}")
-    public void updateUser(@PathVariable Long id, @RequestBody UserDTO userUpdate) {
-        userService.updateUser(id, userUpdate);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userUpdate) {
+       return userService.updateUser(id, userUpdate);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public HttpStatus deleteUser(@PathVariable Long id) {
+        return userService.deleteUser(id);
     }
 }

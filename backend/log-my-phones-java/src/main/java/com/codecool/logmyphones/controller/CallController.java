@@ -4,6 +4,7 @@ import com.codecool.logmyphones.model.CallStatus;
 import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.service.callservice.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -19,23 +20,23 @@ public class CallController {
     }
 
     @GetMapping("/{companyId}")
-    public Set<CallDTO> getAllCallsByCompany(@PathVariable Long companyId) {
+    public ResponseEntity<Set<CallDTO>> getAllCallsByCompany(@PathVariable Long companyId) {
         return callService.getCalls(companyId);
     }
 
     @GetMapping("/{companyId}/byDispatchers")
-    public Set<CallDTO> getAllCallsByDispatchers(@PathVariable Long companyId,
+    public ResponseEntity<Set<CallDTO>> getAllCallsByDispatchers(@PathVariable Long companyId,
                                                  @RequestBody Set<Long> dispatcherIds) {
         return callService.getCallsByDispatchers(companyId, dispatcherIds);
     }
 
     @GetMapping("/{companyId}/byStatus")
-    public Set<CallDTO> getAllCallsByStatus(@PathVariable Long companyId, @RequestBody CallStatus callStatus) {
+    public ResponseEntity<Set<CallDTO>> getAllCallsByStatus(@PathVariable Long companyId, @RequestBody CallStatus callStatus) {
         return callService.getCallsByStatus(companyId, callStatus);
     }
 
     @PostMapping
-    public void addNewCall(@RequestBody CallDTO call){
-        callService.addNewCall(call);
+    public ResponseEntity<CallDTO> addNewCall(@RequestBody CallDTO call){
+        return callService.addNewCall(call);
     }
  }

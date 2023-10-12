@@ -9,6 +9,8 @@ import com.codecool.logmyphones.model.repository.UserRepository;
 import com.codecool.logmyphones.service.mapper.DispatcherMapper;
 import com.codecool.logmyphones.service.mapper.NewDispatcherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -30,31 +32,35 @@ public class DispatcherServiceImpl implements DispatcherService {
     }
 
     @Override
-    public Set<DispatcherDTO> getAllDispatchers(Long companyId) {
-        return dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUserUserId(companyId));
+    public ResponseEntity<Set<DispatcherDTO>> getAllDispatchers(Long companyId) {
+        return new ResponseEntity<>(
+                dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUserUserId(companyId)),
+                HttpStatus.OK) ;
     }
 
     @Override
-    public DispatcherDTO getDispatcherById(Long id) {
-        return dispatcherMapper.toDispatcherDTO(dispatcherRepository.getById(id));
+    public ResponseEntity<DispatcherDTO> getDispatcherById(Long id) {
+        return new ResponseEntity<>(dispatcherMapper.toDispatcherDTO(dispatcherRepository.getById(id)), HttpStatus.OK) ;
     }
 
     @Override
-    public void addNewDispatcher(NewDispatcherDTO dispatcherDTO) {
+    public ResponseEntity<NewDispatcherDTO> addNewDispatcher(NewDispatcherDTO dispatcherDTO) {
         CompanyUser user = userRepository.getById(dispatcherDTO.userUserId());
         Dispatcher dispatcher = newDispatcherMapper.toDispatcher(dispatcherDTO);
         dispatcher.setUser(user);
         dispatcher.setCalls(new HashSet<>());
         dispatcherRepository.save(dispatcher);
+        return new ResponseEntity<>(dispatcherDTO, HttpStatus.OK);
     }
 
     @Override
-    public void updateDispatcher(Long id, DispatcherDTO dispatcherDTO) {
-
+    public ResponseEntity<DispatcherDTO> updateDispatcher(Long id, DispatcherDTO dispatcherDTO) {
+        return null;
     }
 
     @Override
-    public void deleteDispatcher(Long id) {
+    public HttpStatus deleteDispatcher(Long id) {
         dispatcherRepository.deleteById(id);
+        return HttpStatus.NO_CONTENT;
     }
 }
