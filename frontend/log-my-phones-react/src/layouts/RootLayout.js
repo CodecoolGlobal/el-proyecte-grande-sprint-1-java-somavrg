@@ -72,6 +72,11 @@ const RootLayout = () => {
         setAnchorEl(null);
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/");
+    }
+
     const menuItems = [
         {
             text: "Dashboard",
@@ -126,7 +131,9 @@ const RootLayout = () => {
 
                         <Box>
                             <Typography sx={{ fontSize: 12, }}>Logged in as</Typography>
-                            <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>{user.name}</Typography>
+                            <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>{
+                                user?.name ?? ""
+                            }</Typography>
                         </Box>
                         <Box >
                             <IconButton id="fade-button"
@@ -147,7 +154,7 @@ const RootLayout = () => {
                                 TransitionComponent={Fade}
                             >
                                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
                             </Menu>
                         </Box >
                     </Box>
