@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import {Outlet, useNavigate} from "react-router-dom";
 
 function Home(props) {
-    const hasToken = localStorage.getItem("jsonwebtoken");
+    const token = localStorage.getItem("jsonwebtoken");
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(hasToken)
-        if (hasToken) {
+        if (token) {
             navigate("/app");
         }
     }, []);

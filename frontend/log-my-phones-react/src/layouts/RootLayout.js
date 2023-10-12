@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,14 +21,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import Menu from '@mui/material/Menu';
 
-
-
-
-
-
-
-
 const drawerWidth = 280;
+
+const FETCH_USER_PATH = "api/users"
+
+const fetchUser = async (token) => {
+    try {
+        const response = await fetch(FETCH_USER_PATH, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error in fetchUser:', error);
+        return null;
+    }
+}
 
 const theme = createTheme({
     palette: {
@@ -41,17 +53,24 @@ const theme = createTheme({
 
 
 const RootLayout = () => {
+    const token = localStorage.getItem("jsonwebtoken");
+    const [user, setUser] = useState();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    useEffect(() => {
+        fetchUser(token).then(fetchedUser => setUser(fetchedUser));
+    }, []);
+
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const menuItems = [
         {
@@ -75,7 +94,7 @@ const RootLayout = () => {
             path: "/app/statistics"
         }
     ]
-
+    console.log(user);
     return (
         <Box sx={{
             display: 'flex',
@@ -107,7 +126,7 @@ const RootLayout = () => {
 
                         <Box>
                             <Typography sx={{ fontSize: 12, }}>Logged in as</Typography>
-                            <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>Example Ltd.</Typography>
+                            <Typography variant='h6' sx={{ lineHeight: 'normal', color: "#F9F9F9" }}>{user.name}</Typography>
                         </Box>
                         <Box >
                             <IconButton id="fade-button"
