@@ -20,10 +20,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import Menu from '@mui/material/Menu';
+import Divider from "@mui/material/Divider";
 
 const drawerWidth = 280;
 
-const FETCH_USER_PATH = "api/users"
+const FETCH_USER_PATH = "/api/users"
 
 const fetchUser = async (token) => {
     try {
@@ -54,13 +55,13 @@ const theme = createTheme({
 
 const RootLayout = () => {
     const token = localStorage.getItem("jsonwebtoken");
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        fetchUser(token).then(fetchedUser => setUser(fetchedUser));
+        token ? fetchUser(token).then(fetchedUser => setUser(fetchedUser)) : navigate("/")
     }, []);
 
     const open = Boolean(anchorEl);
@@ -99,7 +100,6 @@ const RootLayout = () => {
             path: "/app/statistics"
         }
     ]
-    console.log(user);
     return (
         <Box sx={{
             display: 'flex',
@@ -158,6 +158,7 @@ const RootLayout = () => {
                             </Menu>
                         </Box >
                     </Box>
+                    <Divider />
                     <List sx={{
                         mx: 1.5
                     }}>
