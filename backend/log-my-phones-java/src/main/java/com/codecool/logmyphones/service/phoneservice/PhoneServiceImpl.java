@@ -5,6 +5,8 @@ import com.codecool.logmyphones.model.Phone;
 import com.codecool.logmyphones.model.repository.PhoneRepository;
 import com.codecool.logmyphones.service.mapper.PhoneMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,9 +22,10 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public void addNewPhone(PhoneDTO phoneDTO) {
+    public ResponseEntity<PhoneDTO> addNewPhone(PhoneDTO phoneDTO) {
         Phone phone = phoneMapper.toPhone(phoneDTO);
         phone.setCall(new HashSet<>());
         phoneRepository.save(phone);
+        return new ResponseEntity<>(phoneDTO, HttpStatus.OK);
     }
 }
