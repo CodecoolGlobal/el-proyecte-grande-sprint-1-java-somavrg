@@ -1,5 +1,6 @@
 package com.codecool.logmyphones.controller;
 
+import com.codecool.logmyphones.authentication.AuthenticationResponse;
 import com.codecool.logmyphones.model.DTO.DispatcherDTO;
 
 import com.codecool.logmyphones.model.DTO.NewDispatcherDTO;
@@ -21,9 +22,9 @@ public class DispatcherController {
         this.dispatcherService = dispatcherService;
     }
 
-    @GetMapping("/{companyId}")
-    public ResponseEntity<Set<DispatcherDTO>> getAllDispatchersByCompany(@PathVariable Long companyId) {
-        return dispatcherService.getAllDispatchers(companyId);
+    @GetMapping
+    public ResponseEntity<Set<DispatcherDTO>> getAllDispatchersByCompany(@RequestHeader("Authorization") String token) {
+        return dispatcherService.getAllDispatchers(token);
     }
 
     @GetMapping("/dispatcher/{id}")
