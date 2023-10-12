@@ -11,7 +11,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {useNavigate} from "react-router-dom";
+import {Alert, Snackbar} from "@mui/material";
 
 function Copyright(props) {
     return (
@@ -26,42 +28,61 @@ function Copyright(props) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+const AUTH_LOGIN_URL = "api/auth/authenticate";
 
-const login = (data) => {
-    return fetch("/api/auth/authenticate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+const getJwtToken = async (data) => {
+    try {
+        return await fetch(AUTH_LOGIN_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 const defaultTheme = createTheme();
 
 export default function LoginWindow() {
-    const handleSubmit = (event) => {
+    const [openBadCredentials, setOpenBadCredentials] = React.useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        login({
-            email: data.get('email'),
-            password: data.get('password'),
-        })
-            .then((result) => {
-                if (result) {
-                    const token = result.token
-                    localStorage.setItem("jsonwebtoken", token)
+        const formData = new FormData(event.currentTarget);
 
-                }
-            })
+        const loginCredentials = {
+            email: formData.get("email"),
+            password: formData.get("password")
+        }
 
+        const response = await getJwtToken(loginCredentials);
+        if (response.ok) {
+            const result = await response.json();
+
+            localStorage.setItem("jsonwebtoken", result.token);
+            navigate("/app/dashboard");
+        } else {
+            setOpenBadCredentials(true)
+        }
     };
+
+    const handleCloseBadCredentials = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenBadCredentials(false);
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component={Paper} elevation={6} sx={{ height: '100vh', borderRadius: 4 }}>
-                <CssBaseline />
+            <Grid container component={Paper} elevation={6} sx={{height: '100vh', borderRadius: 4}}>
+                <CssBaseline/>
                 <Grid
                     item
                     xs={false}
@@ -89,13 +110,13 @@ export default function LoginWindow() {
 
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
+                        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                            <LockOutlinedIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                             <TextField
                                 margin="normal"
                                 required
@@ -117,14 +138,14 @@ export default function LoginWindow() {
                                 autoComplete="current-password"
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox value="remember" color="primary"/>}
                                 label="Remember me"
                             />
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{mt: 3, mb: 2}}
                             >
                                 Sign In
                             </Button>
@@ -140,7 +161,12 @@ export default function LoginWindow() {
                                     </Link>
                                 </Grid>
                             </Grid>
-                            <Copyright sx={{ mt: 5 }} />
+                            <Snackbar open={openBadCredentials} autoHideDuration={6000} onClose={handleCloseBadCredentials}>
+                                <Alert onClose={handleCloseBadCredentials} severity="error" sx={{ width: '100%' }}>
+                                    Wrong username or password. Please try again!
+                                </Alert>
+                            </Snackbar>
+                            <Copyright sx={{mt: 5}}/>
                         </Box>
                     </Box>
                 </Grid>
