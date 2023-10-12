@@ -6,6 +6,7 @@ import com.codecool.logmyphones.model.DTO.NewDispatcherDTO;
 import com.codecool.logmyphones.model.Dispatcher;
 import com.codecool.logmyphones.model.repository.DispatcherRepository;
 import com.codecool.logmyphones.model.repository.UserRepository;
+import com.codecool.logmyphones.security.JwtService;
 import com.codecool.logmyphones.service.mapper.DispatcherMapper;
 import com.codecool.logmyphones.service.mapper.NewDispatcherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,23 @@ public class DispatcherServiceImpl implements DispatcherService {
     private final DispatcherMapper dispatcherMapper;
     private final UserRepository userRepository;
     private final NewDispatcherMapper newDispatcherMapper;
+    private final JwtService jwtService;
 
     @Autowired
-    public DispatcherServiceImpl(DispatcherRepository dispatcherRepository, DispatcherMapper dispatcherMapper, UserRepository userRepository, NewDispatcherMapper newDispatcherMapper) {
+    public DispatcherServiceImpl(DispatcherRepository dispatcherRepository, DispatcherMapper dispatcherMapper, UserRepository userRepository, NewDispatcherMapper newDispatcherMapper, JwtService jwtService) {
         this.dispatcherRepository = dispatcherRepository;
         this.dispatcherMapper = dispatcherMapper;
         this.userRepository = userRepository;
         this.newDispatcherMapper = newDispatcherMapper;
+        this.jwtService = jwtService;
     }
 
     @Override
-    public ResponseEntity<Set<DispatcherDTO>> getAllDispatchers(Long companyId) {
+    public ResponseEntity<Set<DispatcherDTO>> getAllDispatchers(String token) {
+        String companyEmail = jwtService.extractUsername(token.split(" ")[1]);
+        System.out.println(companyEmail);
         return new ResponseEntity<>(
-                dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUserUserId(companyId)),
+                dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUser_Email(companyEmail)),
                 HttpStatus.OK) ;
     }
 

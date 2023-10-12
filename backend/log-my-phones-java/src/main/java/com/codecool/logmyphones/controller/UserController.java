@@ -19,28 +19,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<Set<UserDTO>> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping
+    public ResponseEntity<UserDTO> getUserById(@RequestHeader("Authorization") String token) {
+        return userService.getUserById(token);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
-
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<UserDTO> addNewUser(@RequestBody UserDTO user) {
         return userService.addNewUser(user);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userUpdate) {
-       return userService.updateUser(id, userUpdate);
+    @PatchMapping
+    public ResponseEntity<UserDTO> updateUser(@RequestHeader("Authorization") String token, @RequestBody UserDTO userUpdate) {
+       return userService.updateUser(token, userUpdate);
     }
 
-    @DeleteMapping("/{id}")
-    public HttpStatus deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    @DeleteMapping
+    public HttpStatus deleteUser(@RequestHeader("Authorization") String token) {
+        return userService.deleteUser(token);
     }
 }

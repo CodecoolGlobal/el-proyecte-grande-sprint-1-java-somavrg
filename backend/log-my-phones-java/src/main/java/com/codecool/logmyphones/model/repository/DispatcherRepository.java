@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface DispatcherRepository extends JpaRepository<Dispatcher,Long> {
     Set<Dispatcher> getDispatchersByUserUserId(Long userId);
+    Set<Dispatcher> getDispatchersByUser_Email(String email);
 }

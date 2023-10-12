@@ -6,6 +6,7 @@ import com.codecool.logmyphones.model.DTO.ContactDTO;
 import com.codecool.logmyphones.model.DTO.NewContactDTO;
 import com.codecool.logmyphones.model.repository.ContactRepository;
 import com.codecool.logmyphones.model.repository.UserRepository;
+import com.codecool.logmyphones.security.JwtService;
 import com.codecool.logmyphones.service.mapper.ContactMapper;
 import com.codecool.logmyphones.service.mapper.NewContactMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,20 @@ public class ContactServiceImpl implements ContactService {
     private final ContactMapper contactMapper;
     private final NewContactMapper newContactMapper;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Autowired
-    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper, NewContactMapper newContactMapper, UserRepository userRepository) {
+    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper, NewContactMapper newContactMapper, UserRepository userRepository, JwtService jwtService) {
         this.contactRepository = contactRepository;
         this.contactMapper = contactMapper;
         this.newContactMapper = newContactMapper;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     @Override
-    public ResponseEntity<Set<ContactDTO>> getAllContacts(Long companyId) {
-        return new ResponseEntity<>(contactMapper.toContactDTOs(contactRepository.getContactsByUserUserId(companyId)),
+    public ResponseEntity<Set<ContactDTO>> getAllContacts(String token) {
+        return new ResponseEntity<>(contactMapper.toContactDTOs(contactRepository.getContactsByUser_Email(jwtService.extractUsername(token.split(" ")[1]))),
                 HttpStatus.OK);
     }
 

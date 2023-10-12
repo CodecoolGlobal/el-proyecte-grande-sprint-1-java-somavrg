@@ -3,6 +3,7 @@ package com.codecool.logmyphones.service.userservice;
 import com.codecool.logmyphones.model.CompanyUser;
 import com.codecool.logmyphones.model.DTO.UserDTO;
 import com.codecool.logmyphones.model.repository.UserRepository;
+import com.codecool.logmyphones.security.JwtService;
 import com.codecool.logmyphones.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,17 +13,18 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, JwtService jwtService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -33,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDTO> getUserById(Long id) {
-        return new ResponseEntity<>(userMapper.toUserDTO(userRepository.getById(id)), HttpStatus.OK);
+    public ResponseEntity<UserDTO> getUserById(String token) {
+        return new ResponseEntity<>(userMapper.toUserDTO(userRepository.findByEmail(jwtService.extractUsername(token.split(" ")[1])).get()), HttpStatus.OK);
     }
 
     @Override
@@ -47,14 +49,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDTO> updateUser(Long id, UserDTO userDTO) {
-        CompanyUser userToUpdate = userRepository.getById(id);
+    public ResponseEntity<UserDTO> updateUser(String token, UserDTO userDTO) {
+        CompanyUser userToUpdate = userRepository.findByEmail(jwtService.extractUsername(token.split(" ")[1])).get();
         return null;
     }
 
     @Override
-    public HttpStatus deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public HttpStatus deleteUser(String token) {
+        userRepository.deleteByEmail(jwtService.extractUsername(token.split(" ")[1]));
         return HttpStatus.NO_CONTENT;
     }
 

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Set;
 
 public interface ContactService {
-    ResponseEntity<Set<ContactDTO>> getAllContacts(Long companyId);
+    ResponseEntity<Set<ContactDTO>> getAllContacts(String token);
     ResponseEntity<ContactDTO> getContactById(Long id);
     ResponseEntity<NewContactDTO> addNewContact(NewContactDTO contactDTO);
     ResponseEntity<ContactDTO> updateContact(Long id, ContactDTO contactDTO);

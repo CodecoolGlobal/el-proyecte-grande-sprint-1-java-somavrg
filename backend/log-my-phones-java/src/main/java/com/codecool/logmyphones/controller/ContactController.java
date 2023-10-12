@@ -20,9 +20,9 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @GetMapping("/{companyId}")
-    public ResponseEntity<Set<ContactDTO>> getAllContactsByCompany(@PathVariable Long companyId) {
-        return contactService.getAllContacts(companyId);
+    @GetMapping
+    public ResponseEntity<Set<ContactDTO>> getAllContactsByCompany(@RequestHeader("Authorization") String token) {
+        return contactService.getAllContacts(token);
     }
 
     @GetMapping("/contact/{id}")
