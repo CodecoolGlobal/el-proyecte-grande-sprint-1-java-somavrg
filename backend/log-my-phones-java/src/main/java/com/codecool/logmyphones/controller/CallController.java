@@ -1,5 +1,6 @@
 package com.codecool.logmyphones.controller;
 
+import java.lang.String;
 import com.codecool.logmyphones.model.CallStatus;
 import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.service.callservice.CallService;
@@ -19,20 +20,19 @@ public class CallController {
         this.callService = callService;
     }
 
-    @GetMapping("/{companyId}")
-    public ResponseEntity<Set<CallDTO>> getAllCallsByCompany(@PathVariable Long companyId) {
-        return callService.getCalls(companyId);
+    @GetMapping
+    public ResponseEntity<Set<CallDTO>> getAllCallsByCompany(@RequestHeader("Authorization") String token) {
+        return callService.getCalls(token);
     }
 
-    @GetMapping("/{companyId}/byDispatchers")
-    public ResponseEntity<Set<CallDTO>> getAllCallsByDispatchers(@PathVariable Long companyId,
-                                                 @RequestBody Set<Long> dispatcherIds) {
-        return callService.getCallsByDispatchers(companyId, dispatcherIds);
+    @GetMapping("/byDispatchers")
+    public ResponseEntity<Set<CallDTO>> getAllCallsByDispatchers(@RequestBody Set<Long> dispatcherIds) {
+        return callService.getCallsByDispatchers(dispatcherIds);
     }
 
-    @GetMapping("/{companyId}/byStatus")
-    public ResponseEntity<Set<CallDTO>> getAllCallsByStatus(@PathVariable Long companyId, @RequestBody CallStatus callStatus) {
-        return callService.getCallsByStatus(companyId, callStatus);
+    @GetMapping("/byStatus")
+    public ResponseEntity<Set<CallDTO>> getAllCallsByStatus(@RequestHeader("Authorization") String token, @RequestBody CallStatus callStatus) {
+        return callService.getCallsByStatus(token, callStatus);
     }
 
     @PostMapping
