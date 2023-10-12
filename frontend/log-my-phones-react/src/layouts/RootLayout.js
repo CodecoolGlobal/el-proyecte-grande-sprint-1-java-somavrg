@@ -57,22 +57,22 @@ const RootLayout = () => {
         {
             text: "Dashboard",
             icon: <SpaceDashboardRoundedIcon />,
-            path: "/dashboard"
+            path: "/app/dashboard"
         },
         {
             text: "Contacts",
             icon: <PermContactCalendarRoundedIcon />,
-            path: "/contacts"
+            path: "/app/contacts"
         },
         {
             text: "Add Phone",
             icon: <AddIcCallRoundedIcon />,
-            path: "/addphone"
+            path: "/app/addphone"
         },
         {
             text: "Statistics",
             icon: <LeaderboardRoundedIcon />,
-            path: "/statistics"
+            path: "/app/statistics"
         }
     ]
 
