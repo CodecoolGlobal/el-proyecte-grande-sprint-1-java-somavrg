@@ -28,16 +28,34 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
+const login = (data) => {
+    return fetch("/api/auth/authenticate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+};
+
 const defaultTheme = createTheme();
 
 export default function LoginWindow() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+        login({
             email: data.get('email'),
             password: data.get('password'),
-        });
+        })
+            .then((result) => {
+                if (result) {
+                    const token = result.token
+                    localStorage.setItem("jsonwebtoken", token)
+
+                }
+            })
+
     };
 
     return (
