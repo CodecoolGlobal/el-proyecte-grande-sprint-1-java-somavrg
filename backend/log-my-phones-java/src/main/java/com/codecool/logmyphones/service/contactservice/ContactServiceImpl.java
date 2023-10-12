@@ -8,11 +8,11 @@ import com.codecool.logmyphones.model.repository.ContactRepository;
 import com.codecool.logmyphones.model.repository.UserRepository;
 import com.codecool.logmyphones.service.mapper.ContactMapper;
 import com.codecool.logmyphones.service.mapper.NewContactMapper;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -30,32 +30,35 @@ public class ContactServiceImpl implements ContactService {
         this.userRepository = userRepository;
     }
 
-
     @Override
-    public Set<ContactDTO> getAllContacts(Long companyId) {
-        return contactMapper.toContactDTOs(contactRepository.getContactsByUserUserId(companyId));
+    public ResponseEntity<Set<ContactDTO>> getAllContacts(Long companyId) {
+        return new ResponseEntity<>(contactMapper.toContactDTOs(contactRepository.getContactsByUserUserId(companyId)),
+                HttpStatus.OK);
     }
 
     @Override
-    public ContactDTO getContactById(Long id) {
-        return contactMapper.toContactDTO(contactRepository.getById(id));
+    public ResponseEntity<ContactDTO> getContactById(Long id) {
+        return new ResponseEntity<>(contactMapper.toContactDTO(contactRepository.getById(id)), HttpStatus.OK);
     }
 
     @Override
-    public void addNewContact(NewContactDTO contactDTO) {
+    public ResponseEntity<NewContactDTO> addNewContact(NewContactDTO contactDTO) {
         CompanyUser user = userRepository.getById(contactDTO.userUserId());
         Contact newContact = newContactMapper.toContact(contactDTO);
         newContact.setUser(user);
         contactRepository.save(newContact);
+        return new ResponseEntity<>(contactDTO, HttpStatus.OK);
     }
 
     @Override
-    public void updateContact(Long id, ContactDTO contactDTO) {
-
+    public ResponseEntity<ContactDTO> updateContact(Long id, ContactDTO contactDTO) {
+        //TODO
+        return null;
     }
 
     @Override
-    public void deleteContact(Long id) {
+    public HttpStatus deleteContact(Long id) {
         contactRepository.deleteById(id);
+        return HttpStatus.NO_CONTENT;
     }
 }
