@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Set<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(
-                userMapper.toUserDTOs(userRepository.findAll().stream().collect(Collectors.toSet())),
+                userMapper.toUserDTOs(new HashSet<>(userRepository.findAll())),
                 HttpStatus.OK);
     }
 
