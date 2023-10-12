@@ -42,7 +42,7 @@ export default function LoginWindow() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
+            <Grid container component={Paper} elevation={6} sx={{ height: '100vh', borderRadius: 4 }}>
                 <CssBaseline />
                 <Grid
                     item
@@ -56,9 +56,11 @@ export default function LoginWindow() {
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
+                        borderRadius: 4,
+                        height: '100%'
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid item xs={12} sm={8} md={5}>
                     <Box
                         sx={{
                             my: 8,
@@ -66,6 +68,7 @@ export default function LoginWindow() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
