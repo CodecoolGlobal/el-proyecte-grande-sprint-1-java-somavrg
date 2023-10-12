@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface ContactRepository extends JpaRepository<Contact,Long> {
     Set<Contact> getContactsByUserUserId(Long companyId);
+    Set<Contact> getContactsByUser_Email(String email);
 }
