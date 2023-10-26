@@ -1,0 +1,43 @@
+version: '3.8'
+name: 'logmyphones'
+
+services:
+  db:
+    container_name: logmyphones-db
+    image: postgres
+    environment:
+      POSTGRES_USER: logmyphones.com
+      POSTGRES_PASSWORD: phoneslog111
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  backend:
+    image: logmyphones-api
+    container_name: logmyphones-api
+    build:
+      context: .
+      dockerfile: backend-dockerfile
+    environment:
+      - DB_HOST=db
+      - SECRETKEY=abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+  frontend:
+    image: logmyphones-frontend
+    build:
+      context: .
+      dockerfile: frontend-dockerfile
+    container_name: logmyphones-frontend
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+    depends_on:
+      - backend
+volumes:
+  db:

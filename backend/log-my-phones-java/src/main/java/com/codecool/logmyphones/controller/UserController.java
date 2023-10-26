@@ -1,32 +1,40 @@
 package com.codecool.logmyphones.controller;
 
+import com.codecool.logmyphones.model.CompanyUser;
 import com.codecool.logmyphones.model.DTO.UserDTO;
+import com.codecool.logmyphones.security.JwtService;
+import com.codecool.logmyphones.service.mapper.UserMapper;
 import com.codecool.logmyphones.service.userservice.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    @Autowired
-    public UserController(UserService userService) {
+    private final JwtService jwtService;
+
+    public UserController(UserService userService, UserMapper userMapper, JwtService jwtService) {
         this.userService = userService;
-    }
-
-    @GetMapping
-    public ResponseEntity<UserDTO> getUserById(@RequestHeader("Authorization") String token) {
-        return userService.getUserById(token);
+        this.userMapper = userMapper;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
     public ResponseEntity<UserDTO> addNewUser(@RequestBody UserDTO user) {
         return userService.addNewUser(user);
+    }
+
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getAuthenticatedUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO userDTO = userService.getUserByEmail(email);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PatchMapping

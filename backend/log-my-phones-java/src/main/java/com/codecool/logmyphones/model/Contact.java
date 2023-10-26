@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contactId;
+    private Long id;
     private String name;
-    @OneToOne
-    private Phone phone;
     private String info;
+    @ManyToOne
+    private ClientPhone clientPhone;
     @ManyToOne
     private CompanyUser user;
 }

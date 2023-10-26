@@ -1,0 +1,15 @@
+FROM node as frontend-build
+WORKDIR /frontendbuild
+COPY frontend/log-my-phones-react/package*.json ./
+RUN npm install
+COPY frontend/log-my-phones-react/ .
+RUN npm run build
+
+FROM node
+WORKDIR /frontend-server
+COPY frontend-server/package*.json ./
+RUN npm install
+COPY frontend-server/ .
+COPY --from=frontend-build frontendbuild/build/ ./static
+EXPOSE 3000
+CMD ["node", "server.js"]

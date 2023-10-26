@@ -6,13 +6,10 @@ import org.mapstruct.*;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring", uses = {PhoneMapper.class})
+@Mapper(componentModel = "spring", uses = {ClientPhoneMapper.class})
 public interface NewContactMapper {
-    @Mapping(source = "userUserId", target = "user.userId")
     Contact toContact(NewContactDTO newContactDTO);
     Set<Contact> toContact(Set<NewContactDTO> newContactDTO);
-
-    @Mapping(source = "user.userId", target = "userUserId")
     NewContactDTO toContactDTO(Contact contact);
     Set<NewContactDTO> toContactDTO(Set<Contact> contact);
 }

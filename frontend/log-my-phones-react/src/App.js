@@ -5,14 +5,15 @@ import RootLayout from './layouts/RootLayout';
 import Dashboard from './pages/Dashboard';
 import Statistics from './pages/Statistics';
 import AddPhone from './pages/AddPhone';
-import LoginWindow from './components/LoginWindow';
-import RegisterWindow from './components/RegisterWindow';
 import Home from "./pages/Home";
+import PhoneSimulator from "./pages/PhoneSimulator";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         [
             <Route path="/" element={<Home/>}>
+            </Route>,
+            <Route path="/simulator" element={<PhoneSimulator/>}>
             </Route>,
             <Route path="/app" element={<RootLayout/>}>
                 <Route path="dashboard" element={<Dashboard/>}/>

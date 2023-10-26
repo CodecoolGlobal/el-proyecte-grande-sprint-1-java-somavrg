@@ -1,5 +1,6 @@
 package com.codecool.logmyphones.service.mapper;
 
+import com.codecool.logmyphones.model.CompanyUser;
 import com.codecool.logmyphones.model.DTO.NewDispatcherDTO;
 import com.codecool.logmyphones.model.Dispatcher;
 import org.mapstruct.Mapper;
@@ -7,13 +8,12 @@ import org.mapstruct.Mapping;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring", uses = {PhoneMapper.class})
+@Mapper(componentModel = "spring", uses = {ClientPhoneMapper.class})
 public interface NewDispatcherMapper {
-    @Mapping(source = "userUserId", target = "user.userId")
-    Dispatcher toDispatcher(NewDispatcherDTO newDispatcherDTO);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "newDispatcherDTO.name")
+    Dispatcher toDispatcher(NewDispatcherDTO newDispatcherDTO, CompanyUser user);
     Set<Dispatcher> toDispatchers(Set<NewDispatcherDTO> newDispatcherDTOS);
-
-    @Mapping(source = "user.userId", target = "userUserId")
     NewDispatcherDTO toDispatcherDTO(Dispatcher dispatcher);
     Set<NewDispatcherDTO> toCDispatcherDTOs(Set<Dispatcher> dispatchers);
 }

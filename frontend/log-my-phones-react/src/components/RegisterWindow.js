@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Alert, Snackbar} from "@mui/material";
 import {grey} from "@mui/material/colors";
+import {useNavigate} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -28,7 +29,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function RegisterWindow() {
+export default function RegisterWindow({onRegister}) {
     const AUTH_REGISTRATION_URL = "api/auth/register";
 
     const [openPwValidationAlert, setOpenPwValidationAlert] = React.useState(false);
@@ -46,12 +47,12 @@ export default function RegisterWindow() {
         } catch (error) {
             console.error(error)
         }
-    }
 
+    }
     const isPasswordValid = (password, confirmPassword) => {
         return password === confirmPassword;
-    }
 
+    }
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -101,10 +102,11 @@ export default function RegisterWindow() {
                 alignItems: 'center',
                 position: 'absolute',
                 width: '100vw',
-                height: '100vh',
+                minHeight: '100vh',
                 overflow: 'hidden',
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                zIndex: 10
+                zIndex: 10,
+                paddingY: 10
             }}>
                 <Grid container component={Paper} elevation={6} sx={{height: 'auto', borderRadius: 4, width: '1200px'}}>
                     <CssBaseline/>

@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 public class Call {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long callId;
-    @ManyToOne(cascade = CascadeType.ALL)
+    private Long id;
+    @ManyToOne
     private Dispatcher dispatcher;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Phone client;
+    @ManyToOne
+    private ClientPhone clientPhone;
     private LocalDateTime startTime;
     private CallStatus callStatus;
     private CallDirection callDirection;

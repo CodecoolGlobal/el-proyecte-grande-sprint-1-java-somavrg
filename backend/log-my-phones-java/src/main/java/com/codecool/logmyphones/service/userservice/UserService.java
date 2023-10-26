@@ -14,5 +14,5 @@ public interface UserService {
     ResponseEntity<UserDTO> addNewUser(UserDTO userDTO);
     ResponseEntity<UserDTO> updateUser(String token, UserDTO userDTO);
     HttpStatus deleteUser(String token);
-    Optional<CompanyUser> getUserByEmail(String email);
+    UserDTO getUserByEmail(String email);
 }

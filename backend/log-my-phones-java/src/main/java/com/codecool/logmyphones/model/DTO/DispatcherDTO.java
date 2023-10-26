@@ -6,5 +6,6 @@ import java.util.Set;
 @Builder
 public record DispatcherDTO(
         String name,
-        PhoneDTO phone,
-        Set<CallDTO> calls) {}
+        String phoneNumber,
+        Set<CallDTO> calls
+){}

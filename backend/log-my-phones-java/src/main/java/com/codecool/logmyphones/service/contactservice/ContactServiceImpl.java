@@ -60,8 +60,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public HttpStatus deleteContact(Long id) {
+    public void deleteContact(Long id) {
         contactRepository.deleteById(id);
-        return HttpStatus.NO_CONTENT;
     }
 }

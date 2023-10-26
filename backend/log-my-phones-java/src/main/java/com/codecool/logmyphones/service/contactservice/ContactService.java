@@ -12,5 +12,5 @@ public interface ContactService {
     ResponseEntity<ContactDTO> getContactById(Long id);
     ResponseEntity<NewContactDTO> addNewContact(NewContactDTO contactDTO);
     ResponseEntity<ContactDTO> updateContact(Long id, ContactDTO contactDTO);
-    HttpStatus deleteContact(Long id);
+    void deleteContact(Long id);
 }

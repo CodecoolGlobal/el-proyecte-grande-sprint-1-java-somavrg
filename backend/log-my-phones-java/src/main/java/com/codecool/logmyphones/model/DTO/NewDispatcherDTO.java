@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record NewDispatcherDTO(
         String name,
-        PhoneDTO phone,
-        Long userUserId) {}
+        String phoneNumber,
+        Long userId
+) {}
 

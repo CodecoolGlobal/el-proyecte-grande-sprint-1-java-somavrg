@@ -35,16 +35,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDTO> getUserById(String token) {
-        return new ResponseEntity<>(userMapper.toUserDTO(userRepository.findByEmail(jwtService.extractUsername(token.split(" ")[1])).get()), HttpStatus.OK);
+    public ResponseEntity<UserDTO> getUserById(String email) {
+        CompanyUser companyUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User with email: %s not found".formatted(email)));
+
+        return new ResponseEntity<>(userMapper.toUserDTO(companyUser), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<UserDTO> addNewUser(UserDTO newUserDTO) {
         CompanyUser user = userMapper.toCompanyUser(newUserDTO);
+        // TODO EZT MINDENHOL MINDENHOGY ELTUNTETNI
         user.setContacts(new HashSet<>());
         user.setDispatchers(new HashSet<>());
         userRepository.save(user);
+        // TODO HTTP-s dolgokhoz a servicenek ne legyen koze soha
         return new ResponseEntity<>(newUserDTO, HttpStatus.OK);
     }
 
@@ -61,7 +66,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<CompanyUser> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDTO getUserByEmail(String email) {
+        CompanyUser companyUser = userRepository.findByEmail(email).orElseThrow(() ->
+                new RuntimeException("No such user"));
+        return userMapper.toUserDTO(companyUser);
     }
 }

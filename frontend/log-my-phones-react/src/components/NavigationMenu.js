@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import PhonelinkRingTwoToneIcon from '@mui/icons-material/PhonelinkRingTwoTone';
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const pages = ['Home', 'About', 'Help', 'Contact'];
 
@@ -30,7 +30,7 @@ function NavigationMenu({onLogin, onRegister}) {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-                <AppBar position="static" sx={{borderRadius: 4, marginTop: '10px', width: '60%'}}>
+                <AppBar position="static" sx={{borderRadius: 8, marginTop: '30px', width: '60%', paddingX: '25px', paddingY: '10px'}}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
                             <PhonelinkRingTwoToneIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

@@ -35,10 +35,14 @@ function Home(props) {
         setShowRegisterWindow(true);
     }
 
+    function handleAfterRegister() {
+        setShowRegisterWindow(false);
+    }
+
     return (
         <ThemeProvider theme={theme}>
             {showLoginWindow ? <LoginWindow /> : null}
-            {showRegisterWindow ? <RegisterWindow /> : null}
+            {showRegisterWindow ? <RegisterWindow onRegister={handleAfterRegister}/> : null}
             <NavigationMenu onLogin={handleLoginClick} onRegister={handleRegisterClick}/>
             <Box sx={{width:'1100px', mx:'auto'}}>
                 <Headline />

@@ -1,0 +1,11 @@
+FROM maven:3.9.4 AS build
+WORKDIR /backendbuild
+COPY backend/log-my-phones-java/src src
+COPY backend/log-my-phones-java/pom.xml ./
+RUN mvn clean package
+
+FROM eclipse-temurin:latest
+WORKDIR /backend-server
+COPY --from=build backendbuild/target/log-my-phones-java-1.0-SNAPSHOT.jar logmyphones-backend.jar
+EXPOSE 8080
+CMD ["java", "-jar", "logmyphones-backend.jar"]

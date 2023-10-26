@@ -1,11 +1,11 @@
 package com.codecool.logmyphones.model.DTO;
 
-import com.codecool.logmyphones.model.Phone;
+import com.codecool.logmyphones.model.ClientPhone;
 import lombok.Builder;
 
 
 @Builder
 public record NewContactDTO(String name,
-        Phone phone,
+        ClientPhone clientPhone,
         String info,
         Long userUserId) {}

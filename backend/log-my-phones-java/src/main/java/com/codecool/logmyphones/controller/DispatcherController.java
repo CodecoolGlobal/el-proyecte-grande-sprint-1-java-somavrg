@@ -27,7 +27,7 @@ public class DispatcherController {
         return dispatcherService.getAllDispatchers(token);
     }
 
-    @GetMapping("/dispatcher/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DispatcherDTO> getDispatcherById(@PathVariable Long id) {
         return dispatcherService.getDispatcherById(id);
     }
@@ -37,13 +37,14 @@ public class DispatcherController {
         return dispatcherService.addNewDispatcher(dispatcher);
     }
 
-    @PatchMapping("/dispatcher/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<DispatcherDTO> updateDispatcherById(@PathVariable Long id,
                                      @RequestBody DispatcherDTO dispatcherUpdate) {
         return dispatcherService.updateDispatcher(id, dispatcherUpdate);
     }
 
-    @DeleteMapping("/dispatcher/{id}")
+    // TODO ...
+    @DeleteMapping("/{id}")
     public HttpStatus deleteDispatcher(@PathVariable Long id) {
        return dispatcherService.deleteDispatcher(id);
     }

@@ -25,7 +25,7 @@ public class ContactController {
         return contactService.getAllContacts(token);
     }
 
-    @GetMapping("/contact/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ContactDTO> getContactById( @PathVariable Long id) {
         return contactService.getContactById(id);
     }
@@ -35,13 +35,15 @@ public class ContactController {
         return contactService.addNewContact(contact);
     }
 
-    @PatchMapping("/contact/{id}")
+    // TODO ne hasznaljunk patchet (PUT)
+    @PatchMapping("/{id}")
     public ResponseEntity<ContactDTO> updateContactById(@PathVariable Long id, @RequestBody ContactDTO contactUpdate) {
         return contactService.updateContact(id, contactUpdate);
     }
 
-    @DeleteMapping("/contact/{id}")
-    public HttpStatus deleteContactById(@PathVariable Long id) {
-        return contactService.deleteContact(id);
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteContactById(@PathVariable Long id) {
+       contactService.deleteContact(id);
     }
 }

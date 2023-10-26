@@ -37,25 +37,32 @@ public class DispatcherServiceImpl implements DispatcherService {
     @Override
     public ResponseEntity<Set<DispatcherDTO>> getAllDispatchers(String token) {
         String companyEmail = jwtService.extractUsername(token.split(" ")[1]);
-        System.out.println(companyEmail);
         return new ResponseEntity<>(
-                dispatcherMapper.toDispatcherDTOs(dispatcherRepository.getDispatchersByUser_Email(companyEmail)),
-                HttpStatus.OK) ;
+                dispatcherMapper.toDispatcherDTOs(dispatcherRepository.findByUser_Email(companyEmail)),
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ResponseEntity<DispatcherDTO> getDispatcherById(Long id) {
-        return new ResponseEntity<>(dispatcherMapper.toDispatcherDTO(dispatcherRepository.getById(id)), HttpStatus.OK) ;
+        return new ResponseEntity<>(
+                dispatcherMapper.toDispatcherDTO(dispatcherRepository.getById(id)),
+                HttpStatus.OK
+        );
     }
 
     @Override
-    public ResponseEntity<NewDispatcherDTO> addNewDispatcher(NewDispatcherDTO dispatcherDTO) {
-        CompanyUser user = userRepository.getById(dispatcherDTO.userUserId());
-        Dispatcher dispatcher = newDispatcherMapper.toDispatcher(dispatcherDTO);
-        dispatcher.setUser(user);
-        dispatcher.setCalls(new HashSet<>());
+    public ResponseEntity<NewDispatcherDTO> addNewDispatcher(NewDispatcherDTO newDispatcherDTO) {
+        CompanyUser user = userRepository.findById(newDispatcherDTO.userId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "ERROR: User with [%s] id not found.".formatted(newDispatcherDTO.userId())
+                ));
+
+        Dispatcher dispatcher = newDispatcherMapper.toDispatcher(newDispatcherDTO, user);
+
         dispatcherRepository.save(dispatcher);
-        return new ResponseEntity<>(dispatcherDTO, HttpStatus.OK);
+
+        return new ResponseEntity<>(newDispatcherDTO, HttpStatus.OK);
     }
 
     @Override

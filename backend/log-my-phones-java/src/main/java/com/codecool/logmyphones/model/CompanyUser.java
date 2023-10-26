@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 @Data
 @Entity
@@ -14,7 +15,7 @@ import java.util.Set;
 public class CompanyUser {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long userId;
+   private Long id;
    private String name;
    private String email;
    private String password;
@@ -22,11 +23,9 @@ public class CompanyUser {
    @Enumerated(EnumType.STRING)
    private UserRole role;
 
-   @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
-   private Set<Contact> contacts;
-   @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
-   private Set<Dispatcher> dispatchers;
+   @OneToMany(mappedBy = "user")
+   private Set<Contact> contacts = new HashSet<>();
+   @OneToMany(mappedBy = "user")
+   private Set<Dispatcher> dispatchers = new HashSet<>();
 
-
-   public void addContact(Contact contact){contacts.add(contact);}
 }

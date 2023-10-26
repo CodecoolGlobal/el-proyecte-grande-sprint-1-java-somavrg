@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import java.util.Set;
 
-@Mapper(uses = {PhoneMapper.class, CallMapper.class}, componentModel = "spring")
+@Mapper(uses = {ClientPhoneMapper.class, CallMapper.class}, componentModel = "spring")
 public interface DispatcherMapper {
     @Mapping(source = "name", target = "name")
     DispatcherDTO toDispatcherDTO(Dispatcher dispatcher);
