@@ -13,13 +13,22 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Alert, Snackbar} from "@mui/material";
 import {grey} from "@mui/material/colors";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import validator from "validator";
+
+const MINIMUM_COMPANY_NAME_CHARACTERS = 3;
+const PASSWORD_VALIDATOR_CONFIGURATION = {
+    minLength: 8,
+    minUppercase: 1,
+    minNumbers: 1,
+    minSymbols: 1
+}
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    p: 4,
     height: 'auto',
     borderRadius: 4,
     width: '1200px'
@@ -43,8 +52,12 @@ const defaultTheme = createTheme();
 export default function RegisterWindow({onRegister}) {
     const AUTH_REGISTRATION_URL = "api/auth/register";
 
-    const [openPwValidationAlert, setOpenPwValidationAlert] = React.useState(false);
-    const [openRegistrationSuccess, setOpenRegistrationSuccess] = React.useState(false);
+    const [openPwValidationAlert, setOpenPwValidationAlert] = useState(false);
+    const [openRegistrationSuccess, setOpenRegistrationSuccess] = useState(false);
+    const [companyNameError, setCompanyNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordMatchError, setPasswordMatchError] = useState(false);
 
     const sendRegistrationRequest = async (url, registrationFormData) => {
         try {
@@ -60,14 +73,38 @@ export default function RegisterWindow({onRegister}) {
         }
 
     }
-    const isPasswordValid = (password, confirmPassword) => {
-        return password === confirmPassword;
 
+    const isValidCompanyName = (companyName) => {
+        return (companyName.length > MINIMUM_COMPANY_NAME_CHARACTERS);
     }
+
+    const isValidEmail = (email) => {
+        return validator.isEmail(email);
+    }
+
+    const isValidPassword = (password) => {
+        return validator.isStrongPassword(password, {
+            minLength: PASSWORD_VALIDATOR_CONFIGURATION.minLength,
+            minUppercase: PASSWORD_VALIDATOR_CONFIGURATION.minUppercase,
+            minNumbers: PASSWORD_VALIDATOR_CONFIGURATION.minNumbers,
+            minSymbols: PASSWORD_VALIDATOR_CONFIGURATION.minSymbols
+        })
+    }
+
+    const isPasswordMatch = (password, confirmPassword) => {
+        return password === confirmPassword;
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
 
+        setCompanyNameError(false);
+        setEmailError(false);
+        setPasswordError(false);
+        setPasswordMatchError(false);
+        let isValidForm = true;
+
+        const data = new FormData(event.currentTarget);
         const name = data.get('companyName');
         const email = data.get('email');
         const password = data.get('password');
@@ -77,30 +114,38 @@ export default function RegisterWindow({onRegister}) {
             name: name,
             email: email,
             password: password
+        };
+
+        while (isValidForm) {
+            if (!isValidCompanyName(registrationData.name)) {
+                setCompanyNameError(true);
+                isValidForm = false;
+            }
+            if (!isValidEmail(registrationData.email)) {
+                setEmailError(true);
+                isValidForm = false;
+            }
+            if (!isValidPassword(registrationData.password)) {
+                setPasswordError(true);
+                setPasswordMatchError(true);
+                isValidForm = false;
+            } else {
+                if (isPasswordMatch(password, confirmPassword)) {
+                    const response = await sendRegistrationRequest(AUTH_REGISTRATION_URL, registrationData);
+                    setOpenRegistrationSuccess(true);
+                    onRegister();
+                } else {
+                    setPasswordMatchError(true)
+                    isValidForm = false;
+                }
+            }
         }
-
-        if (isPasswordValid(password, confirmPassword)) {
-            const response = await sendRegistrationRequest(AUTH_REGISTRATION_URL, registrationData);
-            setOpenRegistrationSuccess(true);
-
-        } else {
-            setOpenPwValidationAlert(true);
-        }
-    };
-
-    const handleClosePwAlert = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpenPwValidationAlert(false);
     };
 
     const handleCloseRegistrationSuccess = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpenRegistrationSuccess(false);
     };
 
@@ -154,6 +199,7 @@ export default function RegisterWindow({onRegister}) {
                                 label="Company Name"
                                 name="companyName"
                                 autoFocus
+                                error={companyNameError}
                             />
                             <TextField
                                 margin="normal"
@@ -163,6 +209,7 @@ export default function RegisterWindow({onRegister}) {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                error={emailError}
                             />
                             <TextField
                                 margin="normal"
@@ -172,6 +219,7 @@ export default function RegisterWindow({onRegister}) {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                error={passwordError}
                             />
                             <TextField
                                 margin="normal"
@@ -181,22 +229,16 @@ export default function RegisterWindow({onRegister}) {
                                 label="Confirm Password"
                                 type="password"
                                 id="confirmPassword"
+                                error={passwordMatchError}
                             />
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
-                                onClick={onRegister}
                             >
                                 Register
                             </Button>
-                            <Snackbar open={openPwValidationAlert} autoHideDuration={6000}
-                                      onClose={handleClosePwAlert}>
-                                <Alert onClose={handleClosePwAlert} severity="error" sx={{width: '100%'}}>
-                                    Passwords don't match. Please try again!
-                                </Alert>
-                            </Snackbar>
                             <Snackbar open={openRegistrationSuccess} autoHideDuration={6000}
                                       onClose={handleCloseRegistrationSuccess}>
                                 <Alert onClose={handleCloseRegistrationSuccess} severity="success"
