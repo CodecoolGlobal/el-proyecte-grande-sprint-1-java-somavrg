@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Grid, Typography} from "@mui/material";
+import {Grid, Modal, Typography} from "@mui/material";
 import {Outlet, useNavigate} from "react-router-dom";
 import NavigationMenu from "../components/NavigationMenu";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
@@ -18,8 +18,10 @@ const theme = createTheme({
 function Home(props) {
     const token = localStorage.getItem("jsonwebtoken");
     const navigate = useNavigate();
-    const [showLoginWindow, setShowLoginWindow] = useState(false);
-    const [showRegisterWindow, setShowRegisterWindow] = useState(false);
+    const [openRegistration, setOpenRegistration] = useState(false);
+
+    const handleOpenRegistration = () => setOpenRegistration(true);
+    const handleCloseRegistration = () => setOpenRegistration(false);
 
     useEffect(() => {
         if (token) {
@@ -27,23 +29,15 @@ function Home(props) {
         }
     }, []);
 
-    function handleLoginClick() {
-        setShowLoginWindow(true);
-    }
-
-    function handleRegisterClick() {
-        setShowRegisterWindow(true);
-    }
-
-    function handleAfterRegister() {
-        setShowRegisterWindow(false);
-    }
-
     return (
         <ThemeProvider theme={theme}>
-            {showLoginWindow ? <LoginWindow /> : null}
-            {showRegisterWindow ? <RegisterWindow onRegister={handleAfterRegister}/> : null}
-            <NavigationMenu onLogin={handleLoginClick} onRegister={handleRegisterClick}/>
+            <NavigationMenu onLogin={handleOpenRegistration} onRegister={handleOpenRegistration}/>
+            <Modal
+                open={openRegistration}
+                onClose={handleCloseRegistration}
+            >
+                <RegisterWindow onRegister={handleCloseRegistration}/>
+            </Modal>
             <Box sx={{width:'1100px', mx:'auto'}}>
                 <Headline />
                 <DisplayDashboard theme={theme}/>
