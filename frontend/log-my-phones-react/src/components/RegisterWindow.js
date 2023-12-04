@@ -58,6 +58,10 @@ export default function RegisterWindow({onRegister}) {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [passwordMatchError, setPasswordMatchError] = useState(false);
+    const [companyNameErrorText, setCompanyNameErrorText] = useState("");
+    const [emailErrorText, setEmailErrorText] = useState("");
+    const [passwordErrorText, setPasswordErrorText] = useState("");
+    const [passwordMatchErrorText, setPasswordMatchErrorText] = useState("");
 
     const sendRegistrationRequest = async (url, registrationFormData) => {
         try {
@@ -102,6 +106,10 @@ export default function RegisterWindow({onRegister}) {
         setEmailError(false);
         setPasswordError(false);
         setPasswordMatchError(false);
+        setCompanyNameErrorText("");
+        setEmailErrorText("");
+        setPasswordErrorText("");
+        setPasswordMatchErrorText("");
         let isValidForm = true;
 
         const data = new FormData(event.currentTarget);
@@ -119,15 +127,18 @@ export default function RegisterWindow({onRegister}) {
         while (isValidForm) {
             if (!isValidCompanyName(registrationData.name)) {
                 setCompanyNameError(true);
+                setCompanyNameErrorText(`Company name should be at least ${MINIMUM_COMPANY_NAME_CHARACTERS} characters.`);
                 isValidForm = false;
             }
             if (!isValidEmail(registrationData.email)) {
                 setEmailError(true);
+                setEmailErrorText("Not a valid e-mail address.");
                 isValidForm = false;
             }
             if (!isValidPassword(registrationData.password)) {
                 setPasswordError(true);
                 setPasswordMatchError(true);
+                setPasswordErrorText("Your password should be at least 8 characters long, contain an uppercase letter, a number and a symbol.");
                 isValidForm = false;
             } else {
                 if (isPasswordMatch(password, confirmPassword)) {
@@ -135,7 +146,8 @@ export default function RegisterWindow({onRegister}) {
                     setOpenRegistrationSuccess(true);
                     onRegister();
                 } else {
-                    setPasswordMatchError(true)
+                    setPasswordMatchError(true);
+                    setPasswordMatchErrorText("Passwords do not match. Please try again.");
                     isValidForm = false;
                 }
             }
@@ -200,6 +212,7 @@ export default function RegisterWindow({onRegister}) {
                                 name="companyName"
                                 autoFocus
                                 error={companyNameError}
+                                helperText={companyNameErrorText}
                             />
                             <TextField
                                 margin="normal"
@@ -210,6 +223,7 @@ export default function RegisterWindow({onRegister}) {
                                 name="email"
                                 autoComplete="email"
                                 error={emailError}
+                                helperText={emailErrorText}
                             />
                             <TextField
                                 margin="normal"
@@ -220,6 +234,7 @@ export default function RegisterWindow({onRegister}) {
                                 type="password"
                                 id="password"
                                 error={passwordError}
+                                helperText={passwordErrorText}
                             />
                             <TextField
                                 margin="normal"
@@ -230,6 +245,7 @@ export default function RegisterWindow({onRegister}) {
                                 type="password"
                                 id="confirmPassword"
                                 error={passwordMatchError}
+                                helperText={passwordMatchErrorText}
                             />
                             <Button
                                 type="submit"
