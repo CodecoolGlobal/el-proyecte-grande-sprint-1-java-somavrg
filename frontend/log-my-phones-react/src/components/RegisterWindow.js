@@ -124,34 +124,33 @@ export default function RegisterWindow({onRegister}) {
             password: password
         };
 
-        while (isValidForm) {
-            if (!isValidCompanyName(registrationData.name)) {
-                setCompanyNameError(true);
-                setCompanyNameErrorText(`Company name should be at least ${MINIMUM_COMPANY_NAME_CHARACTERS} characters.`);
-                isValidForm = false;
-            }
-            if (!isValidEmail(registrationData.email)) {
-                setEmailError(true);
-                setEmailErrorText("Not a valid e-mail address.");
-                isValidForm = false;
-            }
-            if (!isValidPassword(registrationData.password)) {
-                setPasswordError(true);
-                setPasswordMatchError(true);
-                setPasswordErrorText("Your password should be at least 8 characters long, contain an uppercase letter, a number and a symbol.");
-                isValidForm = false;
-            } else {
-                if (isPasswordMatch(password, confirmPassword)) {
-                    const response = await sendRegistrationRequest(AUTH_REGISTRATION_URL, registrationData);
-                    setOpenRegistrationSuccess(true);
-                    onRegister();
-                } else {
-                    setPasswordMatchError(true);
-                    setPasswordMatchErrorText("Passwords do not match. Please try again.");
-                    isValidForm = false;
-                }
-            }
+        if (!isValidCompanyName(registrationData.name)) {
+            setCompanyNameError(true);
+            setCompanyNameErrorText(`Company name should be at least ${MINIMUM_COMPANY_NAME_CHARACTERS} characters.`);
+            isValidForm = false;
         }
+        if (!isValidEmail(registrationData.email)) {
+            setEmailError(true);
+            setEmailErrorText("Not a valid e-mail address.");
+            isValidForm = false;
+        }
+        if (!isValidPassword(registrationData.password)) {
+            setPasswordError(true);
+            setPasswordMatchError(true);
+            setPasswordErrorText("Your password should be at least 8 characters long, contain an uppercase letter, a number and a symbol.");
+            isValidForm = false;
+        }
+        if (!isPasswordMatch(password, confirmPassword)) {
+            setPasswordMatchError(true);
+            setPasswordMatchErrorText("Passwords do not match. Please try again.");
+            isValidForm = false;
+        }
+        if (isValidForm) {
+            const response = await sendRegistrationRequest(AUTH_REGISTRATION_URL, registrationData);
+            setOpenRegistrationSuccess(true);
+            // onRegister();
+        }
+
     };
 
     const handleCloseRegistrationSuccess = (event, reason) => {
