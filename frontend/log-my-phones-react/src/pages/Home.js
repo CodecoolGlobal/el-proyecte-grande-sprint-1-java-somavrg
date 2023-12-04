@@ -19,9 +19,12 @@ function Home(props) {
     const token = localStorage.getItem("jsonwebtoken");
     const navigate = useNavigate();
     const [openRegistration, setOpenRegistration] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false);
 
     const handleOpenRegistration = () => setOpenRegistration(true);
     const handleCloseRegistration = () => setOpenRegistration(false);
+    const handleOpenLogin = () => setOpenLogin(true);
+    const handleCloseLogin = () => setOpenLogin(false);
 
     useEffect(() => {
         if (token) {
@@ -31,12 +34,18 @@ function Home(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <NavigationMenu onLogin={handleOpenRegistration} onRegister={handleOpenRegistration}/>
+            <NavigationMenu onLogin={handleOpenLogin} onRegister={handleOpenRegistration}/>
             <Modal
                 open={openRegistration}
                 onClose={handleCloseRegistration}
             >
                 <RegisterWindow onRegister={handleCloseRegistration}/>
+            </Modal>
+            <Modal
+                open={openLogin}
+                onClose={handleCloseLogin}
+            >
+                <LoginWindow/>
             </Modal>
             <Box sx={{width:'1100px', mx:'auto'}}>
                 <Headline />
