@@ -53,7 +53,6 @@ export default function RegisterWindow({onRegister}) {
     const AUTH_REGISTRATION_URL = "api/auth/register";
 
     const [openPwValidationAlert, setOpenPwValidationAlert] = useState(false);
-    const [openRegistrationSuccess, setOpenRegistrationSuccess] = useState(false);
     const [companyNameError, setCompanyNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
@@ -147,19 +146,10 @@ export default function RegisterWindow({onRegister}) {
         }
         if (isValidForm) {
             const response = await sendRegistrationRequest(AUTH_REGISTRATION_URL, registrationData);
-            setOpenRegistrationSuccess(true);
-            // onRegister();
+            onRegister();
         }
 
     };
-
-    const handleCloseRegistrationSuccess = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpenRegistrationSuccess(false);
-    };
-
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -254,13 +244,7 @@ export default function RegisterWindow({onRegister}) {
                             >
                                 Register
                             </Button>
-                            <Snackbar open={openRegistrationSuccess} autoHideDuration={6000}
-                                      onClose={handleCloseRegistrationSuccess}>
-                                <Alert onClose={handleCloseRegistrationSuccess} severity="success"
-                                       sx={{width: '100%'}}>
-                                    Registration successful!
-                                </Alert>
-                            </Snackbar>
+
                             <Grid container>
                                 <Grid item>
                                     <Link href="#" variant="body2">

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Grid, Modal, Typography} from "@mui/material";
+import {Alert, Grid, Modal, Snackbar, Typography} from "@mui/material";
 import {Outlet, useNavigate} from "react-router-dom";
 import NavigationMenu from "../components/NavigationMenu";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
@@ -19,12 +19,24 @@ function Home(props) {
     const token = localStorage.getItem("jsonwebtoken");
     const navigate = useNavigate();
     const [openRegistration, setOpenRegistration] = useState(false);
+    const [openRegistrationSuccess, setOpenRegistrationSuccess] = useState(false);
     const [openLogin, setOpenLogin] = useState(false);
 
     const handleOpenRegistration = () => setOpenRegistration(true);
     const handleCloseRegistration = () => setOpenRegistration(false);
     const handleOpenLogin = () => setOpenLogin(true);
     const handleCloseLogin = () => setOpenLogin(false);
+    const handleSuccessfulRegistration = () => {
+        setOpenRegistrationSuccess(true);
+        setOpenRegistration(false);
+    }
+
+    const handleCloseRegistrationSuccess = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenRegistrationSuccess(false);
+    };
 
     useEffect(() => {
         if (token) {
@@ -39,7 +51,7 @@ function Home(props) {
                 open={openRegistration}
                 onClose={handleCloseRegistration}
             >
-                <RegisterWindow onRegister={handleCloseRegistration}/>
+                <RegisterWindow onRegister={handleSuccessfulRegistration}/>
             </Modal>
             <Modal
                 open={openLogin}
@@ -51,6 +63,13 @@ function Home(props) {
                 <Headline />
                 <DisplayDashboard theme={theme}/>
             </Box>
+            <Snackbar open={openRegistrationSuccess} autoHideDuration={6000}
+                      onClose={handleCloseRegistrationSuccess}>
+                <Alert onClose={handleCloseRegistrationSuccess} severity="success"
+                       sx={{width: '100%'}}>
+                    Registration successful!
+                </Alert>
+            </Snackbar>
         </ThemeProvider>
     );
 }
