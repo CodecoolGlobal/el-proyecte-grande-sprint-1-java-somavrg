@@ -187,6 +187,7 @@ export default function RegisterWindow({onRegister}) {
                                 fullWidth
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
+                                onClick={onRegister}
                             >
                                 Register
                             </Button>
