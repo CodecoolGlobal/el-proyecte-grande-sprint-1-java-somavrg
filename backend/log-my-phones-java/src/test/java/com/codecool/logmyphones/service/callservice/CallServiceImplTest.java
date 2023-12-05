@@ -1,6 +1,7 @@
 package com.codecool.logmyphones.service.callservice;
 
 import com.codecool.logmyphones.model.*;
+import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.model.DTO.NewCallDTO;
 import com.codecool.logmyphones.model.repository.CallRepository;
 import com.codecool.logmyphones.model.repository.ClientPhoneRepository;
@@ -68,5 +69,43 @@ class CallServiceImplTest {
 
         verify(clientPhoneRepository, times(1)).save(newClientPhone);
     }
+
+    @Test
+    public void testAddNewCallDurationIsNotValidThrowsException() {
+        NewCallDTO newCallDTO = new NewCallDTO(
+                "123",
+                "345",
+                LocalDateTime.now(),
+                CallStatus.ONGOING,
+                CallDirection.INCOMING,
+                -1
+        );
+
+        assertThrows(IllegalArgumentException.class, () -> callService.addNewCall(newCallDTO));
+    }
+
+    @Test
+    public void testAddNewCallCreatesNewCallRecord() {
+        NewCallDTO newCallDTO = new NewCallDTO(
+                "123",
+                "345",
+                LocalDateTime.now(),
+                CallStatus.ONGOING,
+                CallDirection.INCOMING,
+                0
+        );
+
+        Dispatcher dispatcher = Dispatcher.builder().phoneNumber("123").build();
+        ClientPhone clientPhone = ClientPhone.builder().phoneNumber("345").build();
+
+        Mockito.when(dispatcherRepository.findByPhoneNumber(newCallDTO.dispatcherPhoneNumber())).thenReturn(Optional.of(dispatcher));
+        Mockito.when(clientPhoneRepository.findByPhoneNumber(newCallDTO.clientPhoneNumber())).thenReturn(Optional.of(clientPhone));
+
+        CallDTO savedCallDTO = callService.addNewCall(newCallDTO);
+        Call savedCall = callMapper.toCall(savedCallDTO);
+
+        verify(callRepository, times(1)).save(savedCall);
+    }
+
 
 }
