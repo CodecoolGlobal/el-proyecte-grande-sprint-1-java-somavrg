@@ -1,11 +1,8 @@
 package com.codecool.logmyphones.service.callservice;
 
-import com.codecool.logmyphones.model.Call;
-import com.codecool.logmyphones.model.CallStatus;
-import com.codecool.logmyphones.model.ClientPhone;
+import com.codecool.logmyphones.model.*;
 import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.model.DTO.NewCallDTO;
-import com.codecool.logmyphones.model.Dispatcher;
 import com.codecool.logmyphones.model.repository.CallRepository;
 import com.codecool.logmyphones.model.repository.ClientPhoneRepository;
 import com.codecool.logmyphones.model.repository.DispatcherRepository;
@@ -18,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CallServiceImpl implements CallService {
@@ -69,6 +63,11 @@ public class CallServiceImpl implements CallService {
     @Override
     @Transactional
     public CallDTO addNewCall(NewCallDTO newCallDTO) {
+
+        if (newCallDTO.duration() < 0) {
+            throw new IllegalArgumentException("Call duration cannot be negative number");
+        }
+
         Dispatcher dispatcher = dispatcherRepository.findByPhoneNumber(newCallDTO.dispatcherPhoneNumber())
                 .orElseThrow(() -> new EntityNotFoundException("There is no dispatcher with this phone number."));
         ClientPhone clientPhone = clientPhoneRepository.findByPhoneNumber(newCallDTO.clientPhoneNumber())
