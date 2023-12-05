@@ -28,6 +28,16 @@ function Copyright(props) {
     );
 }
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: 'auto',
+    borderRadius: 4,
+    width: '1200px'
+};
+
 const AUTH_LOGIN_URL = "api/auth/authenticate";
 
 const getJwtToken = async (data) => {
@@ -81,17 +91,7 @@ export default function LoginWindow() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'absolute',
-                width: '100vw',
-                height: '100vh',
-                overflow: 'hidden',
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                zIndex: 10
-            }}>
+            <Box sx={style}>
                 <Grid container component={Paper} elevation={6} sx={{
                     height: 'auto',
                     borderRadius: 4,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Grid, Typography} from "@mui/material";
+import {Alert, Grid, Modal, Snackbar, Typography} from "@mui/material";
 import {Outlet, useNavigate} from "react-router-dom";
 import NavigationMenu from "../components/NavigationMenu";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
@@ -18,8 +18,25 @@ const theme = createTheme({
 function Home(props) {
     const token = localStorage.getItem("jsonwebtoken");
     const navigate = useNavigate();
-    const [showLoginWindow, setShowLoginWindow] = useState(false);
-    const [showRegisterWindow, setShowRegisterWindow] = useState(false);
+    const [openRegistration, setOpenRegistration] = useState(false);
+    const [openRegistrationSuccess, setOpenRegistrationSuccess] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false);
+
+    const handleOpenRegistration = () => setOpenRegistration(true);
+    const handleCloseRegistration = () => setOpenRegistration(false);
+    const handleOpenLogin = () => setOpenLogin(true);
+    const handleCloseLogin = () => setOpenLogin(false);
+    const handleSuccessfulRegistration = () => {
+        setOpenRegistrationSuccess(true);
+        setOpenRegistration(false);
+    }
+
+    const handleCloseRegistrationSuccess = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenRegistrationSuccess(false);
+    };
 
     useEffect(() => {
         if (token) {
@@ -27,27 +44,32 @@ function Home(props) {
         }
     }, []);
 
-    function handleLoginClick() {
-        setShowLoginWindow(true);
-    }
-
-    function handleRegisterClick() {
-        setShowRegisterWindow(true);
-    }
-
-    function handleAfterRegister() {
-        setShowRegisterWindow(false);
-    }
-
     return (
         <ThemeProvider theme={theme}>
-            {showLoginWindow ? <LoginWindow /> : null}
-            {showRegisterWindow ? <RegisterWindow onRegister={handleAfterRegister}/> : null}
-            <NavigationMenu onLogin={handleLoginClick} onRegister={handleRegisterClick}/>
+            <NavigationMenu onLogin={handleOpenLogin} onRegister={handleOpenRegistration}/>
+            <Modal
+                open={openRegistration}
+                onClose={handleCloseRegistration}
+            >
+                <RegisterWindow onRegister={handleSuccessfulRegistration}/>
+            </Modal>
+            <Modal
+                open={openLogin}
+                onClose={handleCloseLogin}
+            >
+                <LoginWindow/>
+            </Modal>
             <Box sx={{width:'1100px', mx:'auto'}}>
                 <Headline />
                 <DisplayDashboard theme={theme}/>
             </Box>
+            <Snackbar open={openRegistrationSuccess} autoHideDuration={6000}
+                      onClose={handleCloseRegistrationSuccess}>
+                <Alert onClose={handleCloseRegistrationSuccess} severity="success"
+                       sx={{width: '100%'}}>
+                    Registration successful!
+                </Alert>
+            </Snackbar>
         </ThemeProvider>
     );
 }
