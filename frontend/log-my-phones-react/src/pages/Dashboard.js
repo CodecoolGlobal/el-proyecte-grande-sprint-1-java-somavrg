@@ -8,35 +8,57 @@ import WatchLaterTwoToneIcon from '@mui/icons-material/WatchLaterTwoTone';
 import PhoneMissedTwoToneIcon from '@mui/icons-material/PhoneMissedTwoTone';
 import CallTable from "../components/CallTable";
 import CssBaseline from "@mui/material/CssBaseline";
+import {useEffect, useState} from "react";
 
 
 const DASHBOARD_DATA_ICON_SIZE = 40;
 
-const Dashboard = () => {
-    const dashboardData = [
-        {
-            icon: <PhoneInTalkTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}} />,
-            title: 'Handled calls',
-            statistic: 624,
-            buttonText: 'See calls',
-            infoType: 'success'
-        },
-        {
-            icon: <WatchLaterTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
-            title: 'Avg. call duration',
-            statistic: 367,
-            buttonText: 'See statistics',
-            infoType: 'info'
-        },
-        {
-            icon: <PhoneMissedTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
-            title: 'Missed calls',
-            statistic: 4,
-            buttonText: 'See pending calls',
-            infoType: 'error'
-        },
+const dashboardData = [
+    {
+        icon: <PhoneInTalkTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}} />,
+        title: 'Handled calls',
+        statistic: 624,
+        buttonText: 'See calls',
+        infoType: 'success'
+    },
+    {
+        icon: <WatchLaterTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
+        title: 'Avg. call duration',
+        statistic: 367,
+        buttonText: 'See statistics',
+        infoType: 'info'
+    },
+    {
+        icon: <PhoneMissedTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
+        title: 'Missed calls',
+        statistic: 4,
+        buttonText: 'See pending calls',
+        infoType: 'error'
+    },
+]
 
-    ]
+const Dashboard = () => {
+    const token = localStorage.getItem("jsonwebtoken");
+    const [calls, setCalls] = useState();
+
+    useEffect(() => {
+        const getCalls = async (token) => {
+            const response = await fetch("/api/calls", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const callsData = await response.json();
+
+            setCalls(callsData);
+        }
+
+        getCalls(token)
+
+    }, []);
+
+    console.log(token);
+
     return (
         <Grid container>
             <CssBaseline />
@@ -53,7 +75,7 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
             <Grid item sx={{my: 5, width: '100%'}}>
-                <CallTable />
+                <CallTable calls={calls}/>
             </Grid>
         </Grid>
     )

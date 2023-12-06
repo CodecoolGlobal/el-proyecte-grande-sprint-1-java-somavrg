@@ -45,7 +45,7 @@ const columns = [
     },
 ]
 
-const createData = (id, localDateTime, clientPhone, dispatcher, callStatus, duration) => {
+const getStatusColor = (callStatus) => {
     let statusColor = '';
     switch (callStatus) {
         case 'ONGOING':
@@ -57,24 +57,10 @@ const createData = (id, localDateTime, clientPhone, dispatcher, callStatus, dura
         case 'SUCCESSFUL':
             statusColor = 'success';
     }
-    return {localDateTime, clientPhone, dispatcher, callStatus, duration, statusColor}
+    return statusColor;
 }
 
-const rows = [
-    createData(1, '2019-01-15T14:22:45.123', '+36123456789', 'James', 'ONGOING', '2min 15sec'),
-    createData(2, '2020-03-20T09:45:30.789', '+36234567890', 'Emma', 'SUCCESSFUL', '5min 47sec'),
-    createData(3, '2021-05-10T16:55:10.456', '+36345678901', 'Oliver', 'FAILED', '1min 50sec'),
-    createData(4, '2019-07-08T08:33:55.222', '+36456789012', 'Ava', 'ONGOING', '3min 10sec'),
-    createData(5, '2020-08-25T22:11:40.654', '+36567890123', 'Liam', 'SUCCESSFUL', '6min 25sec'),
-    createData(6, '2021-10-03T18:09:18.987', '+36678901234', 'Isabella', 'FAILED', '2min 38sec'),
-    createData(7, '2019-02-12T11:44:20.321', '+36789012345', 'Noah', 'ONGOING', '4min 12sec'),
-    createData(8, '2020-04-29T07:29:05.888', '+36890123456', 'Sophia', 'SUCCESSFUL', '7min 53sec'),
-    createData(9, '2021-06-17T15:07:35.555', '+36901234567', 'Mason', 'FAILED', '1min 15sec'),
-    createData(10, '2019-08-01T12:18:50.222', '+36101234567', 'Charlotte', 'ONGOING', '5min 30sec'),
-    createData(11, '2020-11-09T13:55:15.999', '+36211234567', 'William', 'SUCCESSFUL', '8min 42sec')
-];
-
-function CallTable(props) {
+function CallTable({calls}) {
     const [value, setValue] = React.useState('one');
     const [page, setPage] = React.useState(0);
 
@@ -127,7 +113,7 @@ function CallTable(props) {
                             sx={{display: 'inline-block'}}
                             rowsPerPageOptions={[10, 25, 100]}
                             component="div"
-                            count={rows.length}
+                            count={calls?.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
@@ -140,25 +126,25 @@ function CallTable(props) {
                 </Grid>
                 <Table>
                     <TableBody>
-                        {rows.map(data => (
+                        {calls?.map(call => (
                             <TableRow>
                                 <TableCell align='center'>
-                                    <CallTableDateCell date={data.localDateTime}/>
+                                    <CallTableDateCell date={call.startTime}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTableTimeCell date={data.localDateTime}/>
+                                    <CallTableTimeCell date={call.startTime}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTablePhoneNumberCell phoneNumber={data.clientPhone}/>
+                                    <CallTablePhoneNumberCell phoneNumber={call.clientPhone.phoneNumber}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTableDispatcherCell dispatcher={data.dispatcher}/>
+                                    <CallTableDispatcherCell dispatcher={call.dispatcher.name}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTableStatusCell status={data.callStatus} color={data.statusColor}/>
+                                    <CallTableStatusCell status={call.callStatus} color={getStatusColor(call.callStatus)}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTableDurationCell duration={data.duration}/>
+                                    <CallTableDurationCell duration={call.duration}/>
                                 </TableCell>
                             </TableRow>
                         ))}
