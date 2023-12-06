@@ -24,7 +24,7 @@ import Divider from "@mui/material/Divider";
 
 const drawerWidth = 280;
 
-const FETCH_USER_PATH = "/api/users"
+const FETCH_USER_PATH = "/api/users/me"
 
 const fetchUser = async (token) => {
     try {
