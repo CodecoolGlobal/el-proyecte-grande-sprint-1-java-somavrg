@@ -60,17 +60,18 @@ const getStatusColor = (callStatus) => {
     return statusColor;
 }
 
-function CallTable({calls}) {
+function CallTable({calls, onPageChange, onPageSizeChange}) {
     const [value, setValue] = React.useState('one');
     const [page, setPage] = React.useState(0);
 
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-
+        onPageChange(newPage);
     };
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+        setRowsPerPage(event.target.value);
+        onPageSizeChange(event.target.value);
         setPage(0);
     };
 
@@ -113,7 +114,7 @@ function CallTable({calls}) {
                             sx={{display: 'inline-block'}}
                             rowsPerPageOptions={[10, 25, 100]}
                             component="div"
-                            count={calls?.length}
+                            count={calls?.totalElements}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
@@ -121,12 +122,13 @@ function CallTable({calls}) {
                         />
                     </Grid>
                     <Grid item sm={4}>
-                        <Pagination count={10} />
+                        <Pagination count={calls?.totalPages} page={page + 1}
+                                    onChange={(event, page) => {handleChangePage(event, (page - 1))}}/>
                     </Grid>
                 </Grid>
                 <Table>
                     <TableBody>
-                        {calls?.map(call => (
+                        {calls?.content.map(call => (
                             <TableRow>
                                 <TableCell align='center'>
                                     <CallTableDateCell date={call.startTime}/>

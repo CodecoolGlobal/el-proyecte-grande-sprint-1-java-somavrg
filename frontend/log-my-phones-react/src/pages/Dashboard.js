@@ -40,10 +40,12 @@ const dashboardData = [
 const Dashboard = () => {
     const token = localStorage.getItem("jsonwebtoken");
     const [calls, setCalls] = useState();
+    const [paginationPage, setPaginationPage] = useState(0)
+    const [paginationPageSize, setPaginationPageSize] = useState(10)
 
     useEffect(() => {
         const getCalls = async (token) => {
-            const response = await fetch("/api/calls", {
+            const response = await fetch(`/api/calls?pageNo=${paginationPage}&pageSize=${paginationPageSize}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -55,7 +57,15 @@ const Dashboard = () => {
 
         getCalls(token)
 
-    }, []);
+    }, [paginationPage, paginationPageSize]);
+
+    const handlePageChange = (newPage) => {
+        setPaginationPage(newPage);
+    }
+
+    const handlePageSizeChange = (newSize) => {
+        setPaginationPageSize(newSize);
+    }
 
     console.log(token);
 
@@ -75,7 +85,7 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
             <Grid item sx={{my: 5, width: '100%'}}>
-                <CallTable calls={calls}/>
+                <CallTable calls={calls} onPageChange={handlePageChange} onPageSizeChange={handlePageSizeChange}/>
             </Grid>
         </Grid>
     )

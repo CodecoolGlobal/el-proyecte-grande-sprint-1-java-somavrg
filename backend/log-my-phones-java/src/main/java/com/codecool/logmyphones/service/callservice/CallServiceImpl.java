@@ -2,6 +2,7 @@ package com.codecool.logmyphones.service.callservice;
 
 import com.codecool.logmyphones.model.*;
 import com.codecool.logmyphones.model.DTO.CallDTO;
+import com.codecool.logmyphones.model.DTO.CallResponse;
 import com.codecool.logmyphones.model.DTO.NewCallDTO;
 import com.codecool.logmyphones.model.repository.CallRepository;
 import com.codecool.logmyphones.model.repository.ClientPhoneRepository;
@@ -11,11 +12,16 @@ import com.codecool.logmyphones.service.mapper.CallMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CallServiceImpl implements CallService {
@@ -34,15 +40,25 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public List<CallDTO> getCalls(String token) {
+    public CallResponse getCalls(String token, int pageNo, int pageSize) {
         String userEmail = jwtService.extractUsername(token.split(" ")[1]);
-        Set<Dispatcher> dispatchers = dispatcherRepository.findByUser_Email(userEmail);
-        List<Call> calls = new ArrayList<>();
+        Set<Long> dispatcherIds = dispatcherRepository.findByUser_Email(userEmail).stream()
+                .map(Dispatcher::getId).collect(Collectors.toSet());
 
-        dispatchers.forEach(dispatcher ->
-                calls.addAll(callRepository.findCallsByDispatcherId(dispatcher.getId())));
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Call> calls = callRepository.findCallsByDispatcherIdIn(dispatcherIds, pageable);
 
-        return callMapper.toCallDTOs(calls);
+        List<CallDTO> content = calls.map(callMapper::toCallDTO).getContent();
+
+        CallResponse callResponse = new CallResponse();
+        callResponse.setContent(content);
+        callResponse.setPageNo(calls.getNumber());
+        callResponse.setPageSize(calls.getSize());
+        callResponse.setTotalElements(calls.getTotalElements());
+        callResponse.setTotalPages(calls.getTotalPages());
+        callResponse.setLast(calls.isLast());
+
+        return callResponse;
     }
 
     @Override
