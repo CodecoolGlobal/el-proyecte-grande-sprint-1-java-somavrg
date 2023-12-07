@@ -65,7 +65,7 @@ public class CallServiceImpl implements CallService {
     public CallDTO addNewCall(NewCallDTO newCallDTO) {
 
         if (newCallDTO.duration() < 0) {
-            throw new IllegalArgumentException("Call duration cannot be negative number");
+            throw new IllegalArgumentException("Call duration cannot be negative number.");
         }
 
         Dispatcher dispatcher = dispatcherRepository.findByPhoneNumber(newCallDTO.dispatcherPhoneNumber())
