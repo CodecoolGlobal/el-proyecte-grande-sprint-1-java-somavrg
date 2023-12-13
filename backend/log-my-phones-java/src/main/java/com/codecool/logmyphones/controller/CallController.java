@@ -1,6 +1,8 @@
 package com.codecool.logmyphones.controller;
 
 import java.lang.String;
+
+import com.codecool.logmyphones.model.CallDirection;
 import com.codecool.logmyphones.model.CallStatus;
 import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.model.DTO.CallResponse;
@@ -26,9 +28,10 @@ public class CallController {
     public CallResponse getAllCallsByCompany(
             @RequestHeader("Authorization") String token,
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
-    ) {
-        return callService.getCalls(token, pageNo, pageSize);
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value= "callDirection", required = false) CallDirection callDirection
+            ) {
+        return callService.getCalls(token, pageNo, pageSize, callDirection);
     }
 
     // TODO api nevek vallalhatatlanok
