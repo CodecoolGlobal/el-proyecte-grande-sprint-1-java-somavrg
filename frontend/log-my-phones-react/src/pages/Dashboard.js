@@ -40,12 +40,22 @@ const dashboardData = [
 const Dashboard = () => {
     const token = localStorage.getItem("jsonwebtoken");
     const [calls, setCalls] = useState();
-    const [paginationPage, setPaginationPage] = useState(0)
-    const [paginationPageSize, setPaginationPageSize] = useState(10)
+    const [paginationPage, setPaginationPage] = useState()
+    const [paginationPageSize, setPaginationPageSize] = useState()
+    const [callDirection, setCallDirection] = useState("")
 
     useEffect(() => {
+        const queries = [];
+
+        if (paginationPage) queries.push(`pageNo=${paginationPage}`);
+        if (paginationPageSize) queries.push(`pageSize=${paginationPageSize}`);
+        if (callDirection) queries.push(`callDirection=${callDirection}`);
+
+        let fetchString = `/api/calls?${queries.join("&")}`;
+
         const getCalls = async (token) => {
-            const response = await fetch(`/api/calls?pageNo=${paginationPage}&pageSize=${paginationPageSize}`, {
+            const response =
+                await fetch(fetchString, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -57,7 +67,7 @@ const Dashboard = () => {
 
         getCalls(token)
 
-    }, [paginationPage, paginationPageSize]);
+    }, [paginationPage, paginationPageSize, callDirection]);
 
     const handlePageChange = (newPage) => {
         setPaginationPage(newPage);
@@ -65,6 +75,10 @@ const Dashboard = () => {
 
     const handlePageSizeChange = (newSize) => {
         setPaginationPageSize(newSize);
+    }
+
+    const handleCallDirectionChange = (direction) => {
+        setCallDirection(direction);
     }
 
     console.log(token);
@@ -85,7 +99,11 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
             <Grid item sx={{my: 5, width: '100%'}}>
-                <CallTable calls={calls} onPageChange={handlePageChange} onPageSizeChange={handlePageSizeChange}/>
+                <CallTable calls={calls}
+                           onPageChange={handlePageChange}
+                           onPageSizeChange={handlePageSizeChange}
+                           onCallDirectionChange={handleCallDirectionChange}
+                />
             </Grid>
         </Grid>
     )
