@@ -1,5 +1,6 @@
 package com.codecool.logmyphones.service.userservice;
 
+import com.codecool.logmyphones.exception.DuplicateResourceException;
 import com.codecool.logmyphones.model.CompanyUser;
 import com.codecool.logmyphones.model.DTO.UserDTO;
 import com.codecool.logmyphones.model.repository.UserRepository;
@@ -44,6 +45,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<UserDTO> addNewUser(UserDTO newUserDTO) {
+        String newUserEmail = newUserDTO.email();
+        if (userRepository.existsCompanyUserByEmail(newUserEmail)) {
+            throw new DuplicateResourceException(
+                    "Email already taken."
+            );
+        }
         CompanyUser user = userMapper.toCompanyUser(newUserDTO);
         // TODO EZT MINDENHOL MINDENHOGY ELTUNTETNI
         user.setContacts(new HashSet<>());

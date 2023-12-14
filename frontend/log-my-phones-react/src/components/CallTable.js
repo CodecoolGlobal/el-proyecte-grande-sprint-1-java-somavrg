@@ -60,8 +60,8 @@ const getStatusColor = (callStatus) => {
     return statusColor;
 }
 
-function CallTable({calls, onPageChange, onPageSizeChange}) {
-    const [value, setValue] = React.useState('one');
+function CallTable({calls, onPageChange, onPageSizeChange, onCallDirectionChange}) {
+    const [value, setValue] = React.useState('');
     const [page, setPage] = React.useState(0);
 
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -77,6 +77,7 @@ function CallTable({calls, onPageChange, onPageSizeChange}) {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        onCallDirectionChange(newValue)
     };
 
     return (
@@ -96,15 +97,15 @@ function CallTable({calls, onPageChange, onPageSizeChange}) {
                             aria-label="secondary tabs example"
                         >
                             <Tab disableTouchRipple
-                                 value="all"
+                                 value=""
                                  label="All"
                                  sx={{textTransform: 'none'}}/>
                             <Tab disableTouchRipple
-                                 value="in"
+                                 value="INCOMING"
                                  label="In"
                                  sx={{textTransform: 'none'}}/>
                             <Tab disableTouchRipple
-                                 value="out"
+                                 value="OUTGOING"
                                  label="Out"
                                  sx={{textTransform: 'none'}}/>
                         </Tabs>

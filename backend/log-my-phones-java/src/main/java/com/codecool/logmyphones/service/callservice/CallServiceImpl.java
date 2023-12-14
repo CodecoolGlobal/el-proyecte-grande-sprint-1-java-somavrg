@@ -40,13 +40,19 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public CallResponse getCalls(String token, int pageNo, int pageSize) {
+    public CallResponse getCalls(String token, int pageNo, int pageSize, CallDirection callDirection) {
         String userEmail = jwtService.extractUsername(token.split(" ")[1]);
         Set<Long> dispatcherIds = dispatcherRepository.findByUser_Email(userEmail).stream()
                 .map(Dispatcher::getId).collect(Collectors.toSet());
 
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Call> calls = callRepository.findCallsByDispatcherIdIn(dispatcherIds, pageable);
+        Page<Call> calls;
+
+        if (callDirection == null) {
+            calls = callRepository.findCallsByDispatcherIdIn(dispatcherIds, pageable);
+        } else {
+            calls = callRepository.findCallsByDispatcherIdInAndCallDirection(dispatcherIds, callDirection, pageable);
+        }
 
         List<CallDTO> content = calls.map(callMapper::toCallDTO).getContent();
 
