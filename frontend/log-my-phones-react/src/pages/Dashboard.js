@@ -81,8 +81,6 @@ const Dashboard = () => {
         setCallDirection(direction);
     }
 
-    console.log(token);
-
     return (
         <Grid container>
             <CssBaseline />
