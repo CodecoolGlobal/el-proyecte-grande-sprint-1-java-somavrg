@@ -34,19 +34,6 @@ public class CallController {
         return callService.getCalls(token, pageNo, pageSize, callDirection);
     }
 
-    // TODO api nevek vallalhatatlanok
-    // TODO getbe nincs request body
-    // TODO ossze kell vonni ezt a 2-t plusz page-eles
-    @GetMapping("/byDispatchers")
-    public ResponseEntity<List<CallDTO>> getAllCallsByDispatchers(@RequestBody Set<Long> dispatcherIds) {
-        return callService.getCallsByDispatchers(dispatcherIds);
-    }
-
-    @GetMapping("/byStatus")
-    public ResponseEntity<List<CallDTO>> getAllCallsByStatus(@RequestHeader("Authorization") String token, @RequestBody CallStatus callStatus) {
-        return callService.getCallsByStatus(token, callStatus);
-    }
-
     @PostMapping
     public CallDTO addNewCall(@RequestBody NewCallDTO newCallDTO){
         return callService.addNewCall(newCallDTO);
