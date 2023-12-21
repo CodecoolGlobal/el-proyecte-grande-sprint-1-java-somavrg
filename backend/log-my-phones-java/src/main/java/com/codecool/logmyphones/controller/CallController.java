@@ -3,17 +3,13 @@ package com.codecool.logmyphones.controller;
 import java.lang.String;
 
 import com.codecool.logmyphones.model.CallDirection;
-import com.codecool.logmyphones.model.CallStatus;
+
 import com.codecool.logmyphones.model.DTO.CallDTO;
 import com.codecool.logmyphones.model.DTO.CallResponse;
 import com.codecool.logmyphones.model.DTO.NewCallDTO;
 import com.codecool.logmyphones.service.callservice.CallService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/calls")
