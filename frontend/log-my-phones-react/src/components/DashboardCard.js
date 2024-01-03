@@ -16,7 +16,7 @@ const theme = createTheme({
     }
 });
 
-function DashboardCard({data}) {
+function DashboardCard({data, callStatistics}) {
     const infoTypeColor = theme.palette[`${data.infoType}`].light;
     return (
         <ThemeProvider theme={theme}>
@@ -56,7 +56,7 @@ function DashboardCard({data}) {
                                     fontWeight: 'bold'
 
                                 }}>
-                                    {data.statistic}
+                                    {callStatistics ? callStatistics[data.statisticName] : ""}
                                 </Typography>
                             </Box>
                         </Box>
