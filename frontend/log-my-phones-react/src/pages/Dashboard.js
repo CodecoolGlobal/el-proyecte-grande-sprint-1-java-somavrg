@@ -17,21 +17,21 @@ const dashboardData = [
     {
         icon: <PhoneInTalkTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}} />,
         title: 'Handled calls',
-        statistic: 624,
+        statisticName: 'handledCalls',
         buttonText: 'See calls',
         infoType: 'success'
     },
     {
         icon: <WatchLaterTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
         title: 'Avg. call duration',
-        statistic: 367,
+        statisticName: 'averageCallTime',
         buttonText: 'See statistics',
         infoType: 'info'
     },
     {
         icon: <PhoneMissedTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
         title: 'Missed calls',
-        statistic: 4,
+        statisticName: 'failedCalls',
         buttonText: 'See pending calls',
         infoType: 'error'
     },
@@ -40,6 +40,7 @@ const dashboardData = [
 const Dashboard = () => {
     const token = localStorage.getItem("jsonwebtoken");
     const [calls, setCalls] = useState();
+    const [callStatistics, setCallStatistics] = useState();
     const [paginationPage, setPaginationPage] = useState()
     const [paginationPageSize, setPaginationPageSize] = useState()
     const [callDirection, setCallDirection] = useState("")
@@ -65,7 +66,20 @@ const Dashboard = () => {
             setCalls(callsData);
         }
 
-        getCalls(token)
+        const getCallStatistics = async (token) => {
+            const response =
+                await fetch("/api/statistics/calls", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+            const callStatistics = await response.json();
+
+            setCallStatistics(callStatistics);
+        }
+
+        getCallStatistics(token);
+        getCalls(token);
 
     }, [paginationPage, paginationPageSize, callDirection]);
 
@@ -91,7 +105,7 @@ const Dashboard = () => {
                 <Grid container spacing={4}>
                     {dashboardData.map(data => (
                         <Grid item md={4} xs={12}>
-                            <DashboardCard data={data}/>
+                            <DashboardCard data={data} callStatistics={callStatistics}/>
                         </Grid>
                     ))}
                 </Grid>
