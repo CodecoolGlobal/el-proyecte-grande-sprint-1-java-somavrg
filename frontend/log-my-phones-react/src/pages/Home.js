@@ -40,7 +40,7 @@ function Home(props) {
 
     useEffect(() => {
         if (token) {
-            navigate("/app");
+            navigate("/app/dashboard");
         }
     }, []);
 
