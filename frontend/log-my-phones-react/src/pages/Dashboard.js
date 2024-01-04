@@ -96,7 +96,7 @@ const Dashboard = () => {
     return (
         <Grid container>
             <CssBaseline/>
-            <Grid item sx={{my: 5, width: '100%'}}>
+            <Grid item sx={{mb: 5, width: '100%'}}>
                 <Typography variant='h2' fontWeight='bold'>Dashboard</Typography>
             </Grid>
             <Grid item sx={{width: '100%'}}>
