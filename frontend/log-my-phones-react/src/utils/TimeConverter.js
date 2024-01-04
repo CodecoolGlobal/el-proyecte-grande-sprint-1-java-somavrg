@@ -1,6 +1,6 @@
 // TimeConverter.js
 
-function secondsToTimeString(seconds) {
+function secondsToTimeString(seconds, showMinuteIfZero) {
     const days = Math.floor(seconds / 86400);
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -16,7 +16,11 @@ function secondsToTimeString(seconds) {
         result += `${hours}h `;
     }
 
-    result += `${minutes}m `;
+    if (showMinuteIfZero) {
+        result += `${minutes}m `;
+    } else if (hours > 0 || result !== '') {
+        result += `${hours}h `;
+    }
 
     if (remainingSeconds > 0 || result === '') {
         result += `${Math.floor(remainingSeconds)}s`;

@@ -17,6 +17,7 @@ import CallTableDispatcherCell from "./CallTableData/CallTableDispatcherCell";
 import CallTableStatusCell from "./CallTableData/CallTableStatusCell";
 import CallTableDurationCell from "./CallTableData/CallTableDurationCell";
 import Box from "@mui/material/Box";
+import {secondsToTimeString} from "../utils/TimeConverter";
 
 const columns = [
     {
@@ -147,7 +148,7 @@ function CallTable({calls, onPageChange, onPageSizeChange, onCallDirectionChange
                                     <CallTableStatusCell status={call.callStatus} color={getStatusColor(call.callStatus)}/>
                                 </TableCell>
                                 <TableCell>
-                                    <CallTableDurationCell duration={call.duration}/>
+                                    <CallTableDurationCell duration={secondsToTimeString(call.duration)}/>
                                 </TableCell>
                             </TableRow>
                         ))}

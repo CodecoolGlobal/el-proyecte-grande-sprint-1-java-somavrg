@@ -110,7 +110,7 @@ const Dashboard = () => {
                     <Grid item md={4} xs={12}>
                         <DashboardCard
                             data={dashboardCards.averageCallTime}
-                            statisticValue={secondsToTimeString(callStatistics?.averageCallTime)}
+                            statisticValue={secondsToTimeString(callStatistics?.averageCallTime, true)}
                         />
                     </Grid>
                     <Grid item md={4} xs={12}>
