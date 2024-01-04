@@ -16,7 +16,7 @@ const theme = createTheme({
     }
 });
 
-function DashboardCard({data, callStatistics}) {
+function DashboardCard({data, statisticValue}) {
     const infoTypeColor = theme.palette[`${data.infoType}`].light;
     return (
         <ThemeProvider theme={theme}>
@@ -51,12 +51,11 @@ function DashboardCard({data, callStatistics}) {
                                 color: 'text.secondary',
                             }}>{data.title}</Box>
                             <Box sx={{my: 0.5}}>
-                                <Typography variant={"h4"} sx={{
+                                <Typography variant={"h5"} sx={{
                                     color: 'text.primary',
                                     fontWeight: 'bold'
-
                                 }}>
-                                    {callStatistics ? callStatistics[data.statisticName] : ""}
+                                    {statisticValue ? statisticValue : ""}
                                 </Typography>
                             </Box>
                         </Box>
