@@ -9,33 +9,31 @@ import PhoneMissedTwoToneIcon from '@mui/icons-material/PhoneMissedTwoTone';
 import CallTable from "../components/CallTable";
 import CssBaseline from "@mui/material/CssBaseline";
 import {useEffect, useState} from "react";
+import { secondsToTimeString } from "../utils/TimeConverter";
 
 
 const DASHBOARD_DATA_ICON_SIZE = 40;
 
-const dashboardData = [
-    {
-        icon: <PhoneInTalkTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}} />,
+const dashboardCards = {
+    handledCalls: {
+        icon: <PhoneInTalkTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
         title: 'Handled calls',
-        statisticName: 'handledCalls',
         buttonText: 'See calls',
         infoType: 'success'
     },
-    {
+    averageCallTime: {
         icon: <WatchLaterTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
         title: 'Avg. call duration',
-        statisticName: 'averageCallTime',
         buttonText: 'See statistics',
         infoType: 'info'
     },
-    {
+    failedCalls: {
         icon: <PhoneMissedTwoToneIcon sx={{fontSize: DASHBOARD_DATA_ICON_SIZE, display: 'block'}}/>,
         title: 'Missed calls',
-        statisticName: 'failedCalls',
         buttonText: 'See pending calls',
         infoType: 'error'
-    },
-]
+    }
+}
 
 const Dashboard = () => {
     const token = localStorage.getItem("jsonwebtoken");
@@ -57,10 +55,10 @@ const Dashboard = () => {
         const getCalls = async (token) => {
             const response =
                 await fetch(fetchString, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
             const callsData = await response.json();
 
             setCalls(callsData);
@@ -97,17 +95,30 @@ const Dashboard = () => {
 
     return (
         <Grid container>
-            <CssBaseline />
+            <CssBaseline/>
             <Grid item sx={{my: 5, width: '100%'}}>
                 <Typography variant='h2' fontWeight='bold'>Dashboard</Typography>
             </Grid>
             <Grid item sx={{width: '100%'}}>
                 <Grid container spacing={4}>
-                    {dashboardData.map(data => (
-                        <Grid item md={4} xs={12}>
-                            <DashboardCard data={data} callStatistics={callStatistics}/>
-                        </Grid>
-                    ))}
+                    <Grid item md={4} xs={12}>
+                        <DashboardCard
+                            data={dashboardCards.handledCalls}
+                            statisticValue={callStatistics?.handledCalls}
+                        />
+                    </Grid>
+                    <Grid item md={4} xs={12}>
+                        <DashboardCard
+                            data={dashboardCards.averageCallTime}
+                            statisticValue={secondsToTimeString(callStatistics?.averageCallTime)}
+                        />
+                    </Grid>
+                    <Grid item md={4} xs={12}>
+                        <DashboardCard
+                            data={dashboardCards.failedCalls}
+                            statisticValue={callStatistics?.failedCalls}
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid item sx={{my: 5, width: '100%'}}>
