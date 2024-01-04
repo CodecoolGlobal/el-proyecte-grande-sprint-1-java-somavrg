@@ -19,7 +19,7 @@ function secondsToTimeString(seconds) {
     result += `${minutes}m `;
 
     if (remainingSeconds > 0 || result === '') {
-        result += `${remainingSeconds}s`;
+        result += `${Math.floor(remainingSeconds)}s`;
     }
 
     return result.trim();
