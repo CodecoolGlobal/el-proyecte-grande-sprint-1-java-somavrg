@@ -38,12 +38,6 @@ function Home(props) {
         setOpenRegistrationSuccess(false);
     };
 
-    useEffect(() => {
-        if (token) {
-            navigate("/app/dashboard");
-        }
-    }, []);
-
     return (
         <ThemeProvider theme={theme}>
             <NavigationMenu onLogin={handleOpenLogin} onRegister={handleOpenRegistration}/>
