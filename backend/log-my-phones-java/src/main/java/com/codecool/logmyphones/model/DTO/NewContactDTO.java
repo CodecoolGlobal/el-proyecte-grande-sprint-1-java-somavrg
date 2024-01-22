@@ -6,6 +6,6 @@ import lombok.Builder;
 
 @Builder
 public record NewContactDTO(String name,
-        ClientPhone clientPhone,
+        String clientPhone,
         String info,
-        Long userUserId) {}
+        Long companyUserId) {}

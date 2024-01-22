@@ -11,6 +11,7 @@ import java.util.Set;
 public interface ContactMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "info", target = "info")
+    @Mapping(source = "clientPhone", target = "clientPhone")
 
     ContactDTO toContactDTO(Contact contact);
     Set<ContactDTO> toContactDTOs(Set<Contact> contacts);
