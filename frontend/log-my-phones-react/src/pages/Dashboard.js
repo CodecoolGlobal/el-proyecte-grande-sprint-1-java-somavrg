@@ -9,7 +9,8 @@ import PhoneMissedTwoToneIcon from '@mui/icons-material/PhoneMissedTwoTone';
 import CallTable from "../components/CallTable";
 import CssBaseline from "@mui/material/CssBaseline";
 import {useEffect, useState} from "react";
-import { secondsToTimeString } from "../utils/TimeConverter";
+import {secondsToTimeString} from "../utils/TimeConverter";
+import {useNavigate} from "react-router-dom";
 
 
 const DASHBOARD_DATA_ICON_SIZE = 40;
@@ -37,6 +38,7 @@ const dashboardCards = {
 
 const Dashboard = () => {
     const token = localStorage.getItem("jsonwebtoken");
+    const navigate = useNavigate();
     const [calls, setCalls] = useState();
     const [callStatistics, setCallStatistics] = useState();
     const [paginationPage, setPaginationPage] = useState()
@@ -52,6 +54,22 @@ const Dashboard = () => {
 
         let fetchString = `/api/calls?${queries.join("&")}`;
 
+        const getCallStatistics = async (token) => {
+            const response =
+                await fetch("/api/statistics/calls", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+            if (response.status === 200) {
+                const callStatistics = await response.json();
+                setCallStatistics(callStatistics);
+            } else {
+                navigate("/")
+            }
+
+        }
+
         const getCalls = async (token) => {
             const response =
                 await fetch(fetchString, {
@@ -62,18 +80,6 @@ const Dashboard = () => {
             const callsData = await response.json();
 
             setCalls(callsData);
-        }
-
-        const getCallStatistics = async (token) => {
-            const response =
-                await fetch("/api/statistics/calls", {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-            const callStatistics = await response.json();
-
-            setCallStatistics(callStatistics);
         }
 
         getCallStatistics(token);
@@ -101,19 +107,19 @@ const Dashboard = () => {
             </Grid>
             <Grid item sx={{width: '100%'}}>
                 <Grid container spacing={4}>
-                    <Grid item md={4} xs={12}>
+                    <Grid item md={12} lg={4}>
                         <DashboardCard
                             data={dashboardCards.handledCalls}
                             statisticValue={callStatistics?.handledCalls}
                         />
                     </Grid>
-                    <Grid item md={4} xs={12}>
+                    <Grid item md={12} lg={4}>
                         <DashboardCard
                             data={dashboardCards.averageCallTime}
                             statisticValue={secondsToTimeString(callStatistics?.averageCallTime, true)}
                         />
                     </Grid>
-                    <Grid item md={4} xs={12}>
+                    <Grid item md={12} lg={4}>
                         <DashboardCard
                             data={dashboardCards.failedCalls}
                             statisticValue={callStatistics?.failedCalls}
